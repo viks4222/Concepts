@@ -1,0 +1,196 @@
+ 
+Memory Layout of C Programs:
+1.Text segment:
+code execution commands ,mostly read only. present in lower region of memory to avoid 
+overwriting due to heap or stack.
+
+2.Initialized data segment:
+local and global variable which are initialized ,some can be read only like global and static initialized
+eg. static int a =10; 
+
+3.uninitialized data segment:
+uninitialized variables in the local and global
+4.stack 
+Contains program stack in LIFO style.
+Placed in higher parts.
+Grows in opposite direction.
+
+5. Heap:
+Heap is the segment where dynamic memory allocation usually takes place.
+Managed by free and malloc
+The Heap area is shared by all shared libraries and dynamically loaded modules in a process.
+
+
+
+
+Arrays:
+Are the data structures stored in contiguous memory locations.
+Stores multiple items of the same type.
+C++ : Out o bound check is present and compilation error will be thrown.
+
+Initialization of a multidimensional arrays in C/C++
+In C/C++, initialization of a multidimensional arrays can have left most dimension as optional. 
+Except the left most dimension, all other dimensions must be specified.
+eg . array[][3];
+
+in C++ character pointer and character array are equivalent;
+eg.
+ char c[5];
+ char *s = "Friends"  //string literal (should be declared const)
+
+In the implementation of printf, there's a loop that takes the pointer value that was passed in, dereferences it to obtain the character value to be printed, and then increments the pointer so it points to the next character of the string ('F'). This loop continues until it reaches the '\0' null character that marks the end of the string; that null character is not printed.
+
+
+
+
+
+STL's:
+The Standard Template Library (STL) is a set of C++ template classes to provide common programming data structures 
+and functions such as lists, stacks, arrays, etc. It is a library of container classes, algorithms and iterators.
+ It is a generalized library and so, its components are parameterized. A working knowledge of template classes is a prerequisite 
+ for working with STL.
+
+STL has four components:
+
+Algorithms: Sorting,Searching
+Containers:
+Containers or container classes store objects and data. There are in total seven standard “first-class” container classes 
+ and three container adaptor classes and only seven header files that provide access to these containers or container adaptors
+	Sequence Containers:  implement data structures which can be accessed in a sequential manner.
+	eg.Vector,list,arrays
+	Container Adaptors :  provide a different interface for sequential containers:
+	eq.queue,stack
+	
+	Associative Containers :  implement sorted data structures that can be quickly searched (O(log n) complexity).
+	eg.set,multiset,map,multimap
+	
+Vector:
+Vectors are same as dynamic arrays with the ability to resize itself automatically when an element is inserted or deleted, 
+with their storage being handled automatically by the container. Vector elements are placed in contiguous storage so that 
+they can be accessed and traversed using iterators. In vectors, data is inserted at the end. Inserting at the end takes
+ differential time, as sometimes there may be a need of extending the array.Removing the last element 
+takes only constant time, because no resizing happens. Inserting and erasing at the beginning or in the middle is linear in time.	
+
+1.begin() – Returns an iterator pointing to the first element in the vector
+2. end() – Returns an iterator pointing to the theoretical element that follows last element in the vector
+3.size() – Returns the number of elements in the vector
+4.empty() – Returns whether the container is empty
+
+
+
+vector <int> pens
+vector <int> :: iterator i
+
+1.push_back(i)
+2.pop_back();
+3.at(g) – Returns a reference to the element at position ‘g’ in the vector
+4. front() – Returns a reference to the first element in the vector
+5. back() – Returns a reference to the last element in the vector
+6.size() - returns the number of element in vector
+Iterator asociated fuctions in vector-
+1. begin() – Returns an iterator pointing to the first element in the vector
+2. end() – Returns an iterator pointing to the theoretical element that follows last element in the vector
+
+
+List :
+1.Doubly LInked List:
+
+Linked List:
+ease of isertion/ dynamically grows
+Like arrays, Linked List is a linear data structure. 
+Unlike arrays, linked list elements are not stored at contiguous location,the elements are linked using pointers.
+Advantages over arrays
+1) Dynamic size   //size is not fixed for linked list
+2) Ease of insertion/deletion  //memory allocation is non-contiguous so dont have to move element if insrted/deleted
+
+Drawbacks:
+1) Random access is not allowed. We have to access elements sequentially starting from the first node. So we cannot do binary search with linked lists.
+2) Extra memory space for a pointer is required with each element of the list.
+
+Stacks:
+Stacks are a type of container adaptors with LIFO(Last In First Out) type of working, 
+where a new element is added at one end and (top) an element is removed from that end only.
+The functions associated with stack are:
+empty() – Returns whether the stack is empty
+size() – Returns the size of the stack
+top() – Returns a reference to the top most element of the stack
+push(g) – Adds the element ‘g’ at the top of the stack
+pop() – Deletes the top most element of the stack
+
+Queue:
+Queues are a type of container adaptors which operate in a first in first out (FIFO) type of arrangement.
+Elements are inserted at the back (end) and are deleted from the front.
+The functions supported by queue are :
+empty() – Returns whether the queue is empty
+size() – Returns the size of the queue
+front() – Returns a reference to the first element of the queue
+back() – Returns a reference to the last element of the queue
+push(g) – Adds the element ‘g’ at the end of the queue
+pop() – Deletes the first element of the queue
+
+ 
+Array class in C++
+The introduction of array class from C++11 has offered a better alternative for C-style arrays. The advantages of array class over C-style array are :-
+
+Array classes knows its own size, whereas C-style arrays lack this property. So when passing to functions, we don’t need to pass size of Array as a separate parameter.
+With C-style array there is more risk of array being decayed into a pointer. Array classes don’t decay into pointers
+Array classes are generally more efficient, light-weight and reliable than C-style arrays.
+ 
+
+Operations on array :-
+1. at() :- This function is used to access the elements of array.
+2. get() :- This function is also used to access the elements of array. This function is not the member of array class but overloaded function from class tuple.
+3. operator[] :- This is similar to C-style arrays. This method is also used to access array elements.
+4. front() :- This returns the first element of array.
+5. back() :- This returns the last element of array.
+6. size() :- It returns the number of elements in array. This is a property that C-style arrays lack.
+9. empty() :- This function returns true when the array size is zero else returns false.
+10. fill() :- This function is used to fill the entire array with a particular value.
+   
+   // Initializing the array elements
+    array<int,6> ar = {1, 2, 3, 4, 5, 6};
+ 
+    // Printing array elements // empty set container
+    set <int, greater <int> > gquiz1;        
+ 
+    // insert elements in random order
+    gquiz1.insert(40);
+     at()
+    cout << "The array elemets are (using at()) : ";
+    for ( int i=0; i<6; i++)
+    cout << ar.at(i) << " ";
+    cout << endl;
+ 
+ 
+What is Array Decay in C++? How can it be prevented?
+What is Array Decay?
+The loss of type and dimensions of an array is known as decay of an array.This generally occurs 
+when we pass the array into function by value or pointer. What it does is, it sends first address
+to the array which is a pointer, hence the size of array is not the original one, but the one
+occupied by the pointer in the memory.
+
+// C++ code  
+
+map:
+Maps are associative containers that store elements in a mapped fashion. 
+Each element has a key value and a mapped value. No two mapped values can have same key values.
+
+map <int , int> gquiz1;
+gquiz1.insert(pair <int, int> (1, 40));
+
+Iterators:
+As the name suggests, iterators are used for working upon a sequence of values. They are the major feature that allow 
+generality in STL.
+
+Set in C++ Standard Template Library (STL)
+Sets are a type of associative containers in which each element has to be unique, because the value of the element 
+identifies it. The value of the element cannot be modified once it is added to the set, though it is possible to remove
+and add the modified value of that element.
+
+Multiset in C++ Standard Template Library (STL)
+Multisets are a type of associative containers similar to set, with an exception that multiple elements can have same values.
+
+Multimap in C++ Standard Template Library (STL)
+Multimap is similar to mapwith an addition that multiple elements can have same keys. Rather than each element being unique,
+ the key value and mapped value pair has to be unique in this case.
+
