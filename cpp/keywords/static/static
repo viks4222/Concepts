@@ -1,0 +1,40 @@
+http://www.programmerinterview.com/index.php/c-cplusplus/pure-virtual-function/
+
+Static variable:
+-gets space allocated in static storage.
+-stored in data segment.
+-initiate only once and the value carried out to next level(function calls).
+-shared by the objects(Since stored in static storage) in case of classes the static members are shared between objects
+ and there can only be one copy of static member irrespective of number of objects created.
+-variables can not be initialized using constructors.
+-initialization happens outside class
+-the static data is initialized to zero if no other initialization is present at the time of object creation
+-This is useful for implementing coroutines in C/C++ or any other
+ application where previous state of function needs to be stored
+ 
+ static function:-
+ By declaring a function member as static, you make it independent of any particular object of the class.
+ A static member function can be called even if no objects of the class exist and the static functions are accessed
+ using only the class name and the scope resolution operator ::.
+
+ static member functions do not have this pointer.
+ A static member function cannot be virtual (See this G-Fact)
+ Member function declarations with the same name and the name parameter-type-list cannot be overloaded if any of them is a static member function declaration.
+ static member function can not be declared const, volatile, or const volatile.
+
+
+
+Static use in getInstance(singleton pattern)
+
+To retain the value on multiple invokations and avoid further creation of the instance.
+Thereby maintaining a single copy of object.
+
+Static inside a function:
+If you declare a variable within a function scope, it will be allocated the memory for lifetime but won't be exposed to other modules.
+It will carry the value in between the function call and will get initialized only once.
+It is advisable to use static variables within required module/function for integrity.
+
+
+Static members  can only be initialized in there definition and not in initilizer list.
+static functions can access only static members as nonstatic may not have been initialized when static functions are accessed.
+(Error: invalid use of member in static member function)

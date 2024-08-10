@@ -1,0 +1,19 @@
+What are the differences between a pointer variable and a reference variable in C++?
+
+pointer is a an integer variable which stores address of another variable. 
+it can be NULL, and can be any type void , char or int etc.
+pointer does not need to be initialized. 
+pointers can be reseated, i.e. a pointer can be assigned to different variables in its life cycle.
+pointers are less safer as they can be NULL or pointing to any arbitrary location.
+
+
+reference is a variable alias
+References are like constant pointers , once initialized the reference cannot point to another variable in that life cycle.
+Reference must be initialized and thus safer to use.
+Pass by reference is widely used to avoid creating temporary copy of argument passed, this is useful when large size arguments
+are passed in function.
+
+Use:
+
+Use references in function parameters and return types to provide useful and self-documenting interfaces.
+Use pointers for implementing algorithms and data structures.

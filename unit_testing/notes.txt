@@ -1,0 +1,173 @@
+https://www.ibm.com/developerworks/aix/library/au-googletestingframework.html
+
+Difference between assert_eq and expect_eq:
+	when they fail, ASSERT_* yields a fatal failure and returns from the current function, 
+	while EXPECT_* yields a nonfatal failure, allowing the function to continue running.
+
+Ex.
+ASSERT_FALSE(results.empty());  // No point continuing if results is empty
+EXPECT_EQ("OK", results[0]);    // Check first element
+
+EXPECT_CALL(turtle, PenDown())              // turtle is object(class) and PenDown() is method of that object
+      .Times(AtLeast(1));
+      
+      
+Using GTEST:
+
+1.Download Google test
+2.Compile gtest into a static library
+3.Create a unit test project
+4.Make a test case
+
+
+#include "gtest/gtest.h"
+ 
+TEST(SquareRootTest, PositiveNos) { 
+    EXPECT_EQ (18.0, square-root (324.0));
+    EXPECT_EQ (25.4, square-root (645.16));
+    EXPECT_EQ (50.3321, square-root (2533.310224));
+}
+ 
+TEST (SquareRootTest, ZeroAndNegativeNos) { 
+    ASSERT_EQ (0.0, square-root (0.0));
+    ASSERT_EQ (-1, square-root (-22.0));
+}
+ 
+int main(int argc, char **argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
+
+TEST is a predefined macro defined in gtest.h (available with the downloaded sources) that helps define this hierarchy
+
+
+The ::testing::InitGoogleTest method does what the name suggests—it initializes the framework and must be called before RUN_ALL_TESTS. 
+RUN_ALL_TESTS must be called only once in the code because multiple calls to it conflict with some of the advanced features of 
+the framework and, therefore, are not supported. 
+Note that RUN_ALL_TESTS automatically detects and runs all the tests defined using the TEST macro. By default, the results are 
+printed to standard output. Listing 4 shows the output.
+
+
+
+You can pass arg to the InitGoogleTest(&argc, argv) to :
+ 1. You can dump the output into XML format by passing --gtest_output="xml:report.xml" on the command line. 
+ 	You can, of course, replace report.xml with whatever file name you prefer.
+ 2. If you pass --gtest_repeat=2 --gtest_break_on_failure on the command line, the same test is repeated twice. 
+ 	If the test fails, the debugger is automatically invoked.
+ 3. --gtest_filter
+ 
+ eg.
+ ./test_executable --gtest_output="xml:report.xml" --gtest_repeat=2 --
+gtest_filter=SquareRootTest.*-SquareRootTest.Zero*
+ 
+ 
+ 
+ ASSERT_FLOAT_EQ;
+ ASSERT_DOUBLE_EQ;
+ 
+ ASSERT_DEATH:
+ The Google C++ Testing Framework has an interesting category of assertions (ASSERT_DEATH, ASSERT_EXIT, and so on) that it 
+ calls the death assertions. You use this type of assertion to check if a proper error message is emitted in case of bad input 
+ to a routine or if the process exits with a proper exit code. For example, in Listing 3, it would be good to receive an error 
+ message when doing square-root (-22.0) and exiting the program with return status -1 instead of returning -1.0. Listing 11 uses 
+ ASSERT_EXIT to verify such a scenario.
+
+ ASERT_EXIT:
+ ASSERT_EXIT checks if the function is exiting with a proper exit code (that is, the argument to exit or _exit routines) and 
+ compares the string within quotes to whatever the function prints to standard error. Note that the error messages must go to 
+ std::cerr and not std::cout. Listing 12 provides the prototypes for ASSERT_DEATH and ASSERT_EXIT.
+
+ Test fixture:
+ some custom initialization work before executing a unit test
+ 
+ 
+ void setup
+ void teardown
+ 
+ 
+ 
+ class myTestFixture1: public ::testing::test { 
+public: 
+   myTestFixture1( ) { 
+       // initialization code here
+   } 
+ 
+   void SetUp( ) { 
+       // code here will execute just before the test ensues 
+   }
+ 
+   void TearDown( ) { 
+       // code here will be called just after the test completes
+       // ok to through exceptions from here if need be
+   }
+ 
+   ~myTestFixture1( )  { 
+       // cleanup any pending stuff, but no exceptions allowed
+   }
+ 
+   // put in any custom data members that you need 
+};
+ 
+ 
+ 
+ There are a few things that you need to understand when using fixtures:
+
+You can do initialization or allocation of resources in either the constructor or the SetUp method. The choice is left to you, the user.
+You can do deallocation of resources in TearDown or the destructor routine. However, if you want exception handling you must do it only in the TearDown code because throwing an exception from the destructor results in undefined behavior.
+The Google assertion macros may throw exceptions in platforms where they are enabled in future releases. Therefore, it's a good idea to use assertion macros in the TearDown code for better maintenance.
+The same test fixture is not used across multiple tests. For every new unit test, the framework creates a new test fixture. So in Listing 14, the SetUp (please use proper spelling here) routine is called twice because two myFixture1 objects are created.
+ 
+ TEST_F (myTestFixture1, UnitTest1) { 
+    
+.
+}
+ 
+TEST_F (myTestFixture1, UnitTest2) { 
+    
+.
+}
+
+
+
+GMOCK:
+creting mock classes 
+Fwk for creating reliable and fast tests by removing unnecesary dependencies
+
+API to be mocked:
+class NewTest {
+   public:
+      NewTest() {}
+     virtual ~NewTest() {}
+     virtual int Add(int x, int y)=0;
+};
+
+#include <gmock\gmock.h>
+#include "NewTest.h"
+
+class DerivedNew: public NewTest {
+ public:
+MOCK_METHOD2(Add, int(int x, int y));
+};
+
+
+MOCK_METHODn(name-of-method, return-type(arguments)
+Where n is no’s of arguments
+
+EXPECT_CALL(mock-obj, method(matchers))
+         .Times(cardinality)    
+         .WillOnce(action)                                                 
+
+Ex.
+.Times(cardinality) 
+.InSequence(sequences)  
+.After(expectations)  
+.WillOnce(action) 
+ .WillRepeatedly(action) 
+
+
+
+EXPECT_CALL(a,Add(5,6).Times())
+					  .willRepeatedly()
+					  
+Valgrind					 
+valgrind --tool=memcheck --leak-check=full ./test					  

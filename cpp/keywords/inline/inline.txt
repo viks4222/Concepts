@@ -1,0 +1,7 @@
+
+Inline:
+ When the inline function is called whole code of the inline function gets inserted or substituted at the point of inline function call. 
+ This substitution is performed by the C++ compiler at compile time. Inline function may increase efficiency if it is small.
+ Reduces execution time.
+ used only when function switching  time is more than the function execution tmme.
+ 

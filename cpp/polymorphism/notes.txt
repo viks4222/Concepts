@@ -1,0 +1,8 @@
+The rule of thumb - if we have a class with a virtual function, it needs a virtual destructor. Why?
+
+If a class has a virtual function, it is likely to be used as a base class.
+If it is a base class, its derived class is likely to be allocated using new.
+If a derived class object is allocated using new and manipulated through a pointer to its base, it is likely to be deleted via a pointer to its base.
+
+
+using virtual destructors ensures that the correct sequence of destructors is called.

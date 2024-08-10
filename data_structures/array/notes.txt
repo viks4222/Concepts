@@ -1,0 +1,6 @@
+Use of dynamic memory allocation
+
+1.If you want your object to persist beyond the scope in which it was created.
+2.Usually, stack sizes are limited and hence if your object occupies a lot of memory
+then you might run out of stack space in such cases one would usually go for dynamic memory allocation.
+3. If the size of the variable are not known at runtime.

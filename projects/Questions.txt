@@ -1,0 +1,163 @@
+
+Classes and Objects 
+Constructors and Destructor	
+Copy Constructor- shallow copy and deep copy
+Constructor initilizer list (for nonstatic  const & reference variables) and the initilisation inside the constructor
+copy constructor and assignment operator.
+Why we need cp ctr ?
+When cpy ctr gets called ?
+Can you hv pur virtual dtor ?
+Cpy ctor for with char ptr ?
+When we can't create an object for a pure virtual function then what is the use of pure virtual destructor
+Operator overloading (=) , how to avoid leaks in this
+Virtual Constructors and destructors
+
+OOPS Concepts:
+abstraction and interfaces and its use.
+access specifier-private,protected,public
+class with pointer member functions
+Size of empty class, class with one virtual function
+Can char* point to an empty class?
+what is this pointer, can it be deleted?
+Abstract class
+interface
+virtual functions
+Vtble and vptr
+Virtual table and pointers
+example of real time polymorphism ,encapsulation,abstraction,inheritance
+private inheritance?? And real time scenario examples?? When should we mainly use??
+Employee class with setter getter and inheritance
+
+
+Design pattern in details:
+Creational patterns:
+1.Singleton Design Pattern-
+why methods are static in singleton , why constructor is set private, why use singleton pattern
+2.factory Pattern
+Structural patterns:
+Behavioural patterns:
+state ,observer
+1.      Singleton
+2.      Factory
+3.      Adaptor
+4.      Observer
+Agile Technology
+
+References
+References (interview question with examples)
+References and pointer
+passsing by ref and passing by pointer
+How do you initialise a reference?
+dangling pointer
+9)Pointers-void,far,near,wild,uninitialized pttr, NULL
+Auto-ptr and shared_ptr
+Casting in c++
+ Casting â€“ Different kinds and in depth
+understanding (with example)
+Static, extern, const how they are initialize
+static members and functions
+static class ?
+const members and functions
+
+Template
+What is spacialise template?
+STLs
+types of STL's
+difference between map & vector
+Vector operations 
+Dynamic Memory Allocation
+Heap Memory and Stack Memory
+Exception handling
+UML diagrams:
+UML diagram for a company and class diagram
+Data Structures:
+String class and its functions.
+Difference betn new and malloc
+difference between array and linked list
+Write a program  for linked list, queue,
+stack
+1.Postfix Prefix ,expressions and associativity
+2.linked list-insertion,deletion,reversal
+Sorting algo:- quick,selection,bubble, insertion
+
+Multithreading- pthread , thread sync,thread mutex,thread management,pthread API's
+used -lpthread in linux to link programs ,present in std library for windows
+Mutex - a variable for IPC and synchronization
+Semaphore - a variable for specifying set of operations to be done in mutual excusion fork - to fork a child process
+vfork - to fork a child process, and to guarantee the child executes first so that the child address space can be replaced by entirely new process by any of exec family of call
+GTEST fwk
+
+Programs:
+prime/non prime program
+no of occurrences of a digit in a range
+program to check if the linked list is looped or not.
+Fibonacci series
+
+
+puzzles:
+1.4X4 cube and cuts to have 64 pieces
+2.auto travels 100 km and has 2 extra tyres ,distance so that each ttyre can travel equal distance.
+3. milk puzzle with 3L,5L,8L ltr containers
+
+
+MISC:
+collection - hast table,map, vector, binary tree
+Multi threading
+Memory Management 
+Marshaling
+SDI,MDI
+TCP/IP client server connection
+Message passing, delegation, IPC
+File handling
+name mangling
+object slicing
+GDB
+segmentation  faults,
+memory leaks
+
+
+
+Questions at prescient tech
+
+1.Postfix Prefix ,expressions and associativity
+2.linked list,
+
+prime/non prime program
+no of occurrences of a digit in a range
+program to check if the linked list is looped or not.
+Fibonacci series
+UML diagram for a company and class diagram
+puzzles:
+1.4X4 cube and cuts to have 64 pieces
+2.auto travels 100 km and has 2 extra tyres ,distance so that each ttyre can travel equal distance.
+3. milk puzzle with 3L,5L,8L ltr containers
+
+que:
+1.difference between array and linked list , map & vector, new and malloc,shallow copy and deep copy
+2.dangling pointer
+3.class diagram for company
+4.Types of UML diagram.
+5.singleton pattern code
+6.abstraction and interfaces,use
+
+
+Pratiti interview:
+Project overview,architecture,
+design patterns used?
+difference between abstraction and encapsulation,their similarities and relation
+copy constructor and assignment operator
+shallow copy and deep copy
+virtual constructor ad virtual destructor ,private ?
+can destructor be overlaoded?
+can destructor be private declared
+
+
+Amdocs :
+1. what are the cpp concepts used in your prev projects
+2. register keyword in c 
+3. Database queries DDM and DDL 
+4. RDBMS
+5. DBMS connection
+6. linux commands : find,grep ,recursive search
+7. VIrtual functions: overriding and overloading
+8. namespace

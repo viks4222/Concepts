@@ -1,0 +1,144 @@
+EEPROM(Electrically erasable and programmable Read Only Memory)
+	-Earlier it could be reprogrammed tens to hundreds of thousands of times. 
+	-with modern EEPROM, it can be reprogrammed a million times. 
+	-Additionally, to perform a rewrite, EEPROM chips must be completely erased, unlike other read-only memory (ROM).
+	
+Categories:
+	1. Serial Bus
+	2. Parallel Bus(Data bus of 8 bits)
+		-The majority of devices include write-protect and chip select pins	
+		
+EEPROM is mainly used in devices (like digital potentiometers, digital temperature sensors and real-time clocks) to save calibration 
+or similar data that is required when the power is switched off or removed.
+EEPROMs are recognized as arrays of floating gate transistors.
+
+PROM:
+Programmable read-only memory (PROM) is read-only memory ( ROM ) that can be modified once by a user. 
+PROM is a way of allowing a user to tailor a microcode program using a special machine called a PROM programmer . 
+This machine supplies an electrical current to specific cells in the ROM that effectively blows a fuse in them. 
+The process is known as burning the PROM .		
+
+EPROM:
+EPROM is erased using Ultra violet rays.
+EPROM chip has to be removed from the computer circuit to erase and reprogram the computer BIOS
+
+
+EEPROM:
+EEPROM chip can be erased and reprogrammed in the computer circuit to erase and reprogram the content of computer BIOS.
+EEPROM can be erased in the circuit by applying the special programming signals
+
+
+MASK PROGRAMMABLE ROMs:
+Mask programmable read-only memories (ROMs) are the least expensive type of solid statememory. 
+They are primarily used for storing video game software and fixed data for electronic equipment, 
+such as fonts for laser printers, dictionary data in word processors, and sound data in
+
+
+
+Parallel EEPROM
+The serial access represents 90 percent of the overall EEPROM market, and parallel EEPROMs about 10 percent. Parallel
+devices are available in higher densities (竕･256Kbit), are generally faster, offer high endurance and reliability, 
+and are found mostly in the military market. They are pin compatible with EPROMs
+and flash memory devices. 
+
+Serial EEPROM
+Serial EEPROMs are less dense (typically from 256 bit to 256Kbit) and are slower than parallel
+devices. 
+They are much cheaper and used in more 窶彡ommodity窶� applications.
+
+Why progrommable but ROM:
+Regular "writing" means just that - storing data during program execution, usually with fast and/or random access.
+EEPROM could be written at the time of programming but couldn't be at the time of execution.
+
+The EEPROM acronym has some history which follows the development of the technology.
+
+ROM: Read-Only Memory. Written at the factory.
+
+PROM: Programmable Read-Only Memory but programmable (once) by the user. Really a one-time programmable, forever readable memory. Get it wrong and you dump the chip.
+
+EPROM: Eraseable Programmable Read-Only Memory. Usually erased using UV light through a quartz window above the chip. A bit of trouble but very useful.
+
+EEPROM: Electrically Erasable Programmable Read-Only Memory. Can be erased or re-written under program control.
+
+
+	
+FLash Memory :
+
+
+Flash memory is an electronic non-volatile computer storage device that can be electrically erased and
+reprogrammed
+
+Flash memory developed from EEPROM (electrically erasable programmable read-only memory). There are two
+main types of flash memory, which are named after the NAND and NOR logic gates. The internal characteristics of
+the individual flash memory cells exhibit characteristics similar to those of the corresponding gates.
+
+
+Whereas EPROMs had to be completely erased before being rewritten, NAND type flash memory may be written
+and read in blocks (or pages) which are generally much smaller than the entire device. The NOR type allows a single
+machine word (byte) to be written or read independently
+
+NAND type is primarily used in main memory, memory cards, USB flash drives, solid-state drives, and similar
+products, for general storage and transfer of data
+
+The NOR type, which allows true random access and therefore
+direct code execution, is used as a replacement for the older EPROM and as an alternative to certain kinds of ROM
+applications, whereas NOR flash memory may emulate ROM primarily at the machine code level; many digital
+designs need ROM (or PLA) structures for other uses, often at significantly higher speeds than (economical) flash
+memory may achieve.
+
+NAND or NOR flash memory is also often used to store configuration data in
+numerous digital products, a task previously made possible by EEPROMs or battery-powered static RAM
+
+
+Example applications of both types of flash memory include personal computers, PDAs, digital audio players, digital
+cameras, mobile phones, synthesizers, video games, scientific instrumentation, industrial robotics, medical
+electronics, 
+
+
+flash memory offers fast read access times, as fast as
+dynamic RAM, although not as fast as static RAM or ROM
+
+
+Although flash memory is technically a type of EEPROM, the term "EEPROM" is generally used to refer
+specifically to non-flash EEPROM which is erasable in small blocks, typically bytes. Because erase cycles are slow,
+the large block sizes used in flash memory erasing give it a significant speed advantage over old-style EEPROM
+when writing large amounts of data. As of 2013[1] flash memory costs much less than byte-programmable EEPROM
+and has become the dominant memory type wherever a system requires a significant amount of non-volatile, solid
+state storag
+
+
+
+NOR vs NAND Flash
+
+
+
+The NOR Flash architecture provides enough address lines to map the entire memory range. This gives the advantage of random access and short read times, which makes it ideal for code execution. Another advantage is 100% known good bits for the life of the part. Disadvantages include larger cell size resulting in a higher cost per bit and slower write and erase speeds. For more details on how NOR Flash can be used in embedded systems, see An Overview of Parallel NOR Flash Memory.
+
+NAND Flash, in contrast, has a much smaller cell size and much higher write and erase speeds compared to NOR Flash. Disadvantages include the slower read speed and an I/O mapped type or indirect interface, which is more complicated and does not allow random access. It is important to note that code execution from NAND Flash is achieved by shadowing the contents to a RAM, which is different than code execution directly from NOR Flash. Another major disadvantage is the presence of bad blocks. NAND Flash typically have 98% good bits when shipped with additional bit failure over the life of the part, thus requiring the need for error correcting code (ECC) functionality within the device.
+
+Memory Capacity
+
+NAND Flash memories are available in much higher densities compared to NOR Flash owing primarily to its lower cost per bit. NAND Flash memories typically comes in capacities of 1Gb to 16Gb. NOR Flash memories range in density from 64Mb to 2Gb. Because of its higher density, NAND Flash is used mainly for data storage applications.
+
+Erase, Read & Write
+
+In both NOR and NAND Flash, the memory is organized into erase blocks. This architecture helps maintain lower cost while maintaining performance. For example, a smaller block size enables faster erase cycles. The downside of smaller blocks, however, is an increase in die area and memory cost. Because of its lower cost per bit, NAND Flash can more cost-effectively support smaller erase blocks compared to NOR Flash. The typical block size available today ranges from 8KB to 32KB for NAND Flash and 64KB to 256KB for NOR Flash.
+
+Erase operations in NAND Flash are straightforward while in NOR Flash, each byte needs to be written with 窶�0窶� before it can be erased. This makes the erase operation for NOR Flash much slower than for NAND Flash. For example, the S34ML04G2 Cypress NAND Flash requires 3.5ms to erase a 128KB block while the S70GL02GT Cypress NOR Flash requires ~520ms to erase a similar 128KB sector. This is a difference of nearly 150 times.
+
+As mentioned earlier, NOR Flash memory has enough address and data lines to map the entire memory region, similar to how SRAM operates. For example, a 2-Gbit (256MB) NOR Flash with a 16-bit data bus will have 27 address lines, enabling random read access to any memory location. In NAND Flash, memory is accessed using a multiplexed address and data bus. Typical NAND Flash memories use an 8-bit or 16-bit multiplexed address/data bus with additional signals such as Chip Enable, Write Enable, Read Enable, Address Latch Enable, Command Latch Enable, and Ready/Busy. The NAND Flash needs to provide a command (read, write or erase), followed by the address and the data. These additional operations makes the random read for NAND Flash much slower. For example, the S34ML04G2 NAND Flash requires 30ﾂｵS compared to 120ns for S70GL02GT NOR Flash. Thus the NAND is 250 times slower.
+
+
+
+
+Series Vs PArallel EEPROm:
+EEPROM devices typically have an 8-bit data bus and an address bus wide enough to cover the complete memory" and also "Operation of a parallel EEPROM is simple and fast when compared to serial EEPROM". 
+In that case why are serial EEPROMs becoming more popular than the parallel EEPROM
+
+They require less pins and various serial busses are very common in designs. With modern speeds the speed of serial is absolutely fine for what EEPROM devices are used for. 窶� David Jun 11 '15 at 10:58
+Surely with the same modern speeds a parallel interface would give a much better throughput, compared to a serial interface
+
+
+EEPROM devices are primarily used to store parametric data or characterization constants for a device. The typical scenario is to write very seldom and read typically once each time the host device boots up. For this type of application the relatively slow writing times of EEPROM are of little concern. And the reading time to load at most a few K-bytes of data from a serial device (SPI or I2C) is not normally an excessive time impact.
+
+There is another factor that has played into the popularity of serial devices over parallel devices. That has been the migration of MCU devices from older microprocessor units with parallel busses to the much more prevalent modern types that have all their program storage memory and data memory built right on the chip. Often there is no longer a parallel bus option directly available. And in most applications there is very little interest in using up scads of pins to bit bang to a parallel peripheral.

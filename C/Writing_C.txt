@@ -1,0 +1,98 @@
+5.1 Formatting Your Source Code
+Please keep the length of source lines to 79 characters or less, for maximum readability in the widest range of environments.
+
+For functions:
+static char *
+concat (char *s1, char *s2)
+{
+  Åc
+}
+
+
+
+For struct and enum types, likewise put the braces in column one, unless the whole contents fits on one line:
+
+struct foo
+{
+  int a, b;
+}
+or
+struct foo { int a, b; }
+
+
+
+When you split an expression into multiple lines, split it before an operator, not after one. Here is the right way:
+
+ if (foo_this_is_long && bar > win (x, y, z)
+    && remaining_condition)
+
+    
+    
+Try to avoid having two operators of different precedence at the same level of indentation. For example, donÅft write this:
+
+mode = (inmode[j] == VOIDmode
+        || GET_MODE_SIZE (outmode[j]) > GET_MODE_SIZE (inmode[j])
+        ? outmode[j] : inmode[j]);
+Instead, use extra parentheses so that the indentation shows the nesting:
+
+mode = ((inmode[j] == VOIDmode
+         || (GET_MODE_SIZE (outmode[j]) > GET_MODE_SIZE (inmode[j])))
+        ? outmode[j] : inmode[j]);
+  
+  
+ 
+ 
+Commenting Your Work
+Every program should start with a comment saying briefly what it is for.
+Also, please write a brief comment at the start of each source file, with the file name and a line or two about the overall 
+purpose of the file.
+
+Please put a comment on each function saying what the function does, what sorts of arguments it gets, 
+and what the possible values of arguments mean and are used for. It is not necessary to duplicate in
+ words the meaning of the C argument declarations, if a C type is being used in its customary fashion. 
+ If there is anything nonstandard about its use (such as an argument of type char * which is really the 
+ address of the second character of a string, not the first), or any possible values that would not work 
+ the way one would expect (such as, that strings containing newlines are not guaranteed to work), be sure to say so.
+
+Also explain the significance of the return value, if there is one.
+
+Please put two spaces after the end of a sentence in your comments, so that the Emacs sentence commands will work. 
+Also, please write complete sentences and capitalize the first word.
+ 
+The comment on a function is much clearer if you use the argument names to speak about the argument values. 
+The variable name itself should be lower case, but write it in upper case when you are speaking about the value rather 
+than the variable itself. Thus, Ågthe inode number NODE_NUMÅh rather than Ågan inodeÅh.
+
+There is usually no purpose in restating the name of the function in the comment before it, because readers can 
+see that for themselves. There might be an exception when the comment is so long that the function itself would 
+be off the bottom of the screen.
+
+There should be a comment on each static variable as well, like this:
+/* Nonzero means truncate lines in the display;
+   zero means continue them.  */
+int truncate_lines;
+
+
+
+Every Åe#endifÅf should have a comment, except in the case of short conditionals (just a few lines) that are not nested. The comment should state the condition of the conditional that is ending, including its sense. Åe#elseÅf should have a comment describing the condition and sense of the code that follows. For example:
+
+#ifdef foo
+  Åc
+#else /* not foo */
+  Åc
+#endif /* not foo */
+#ifdef foo
+  Åc
+#endif /* foo */
+but, by contrast, write the comments this way for a Åe#ifndefÅf:
+
+#ifndef foo
+  Åc
+#else /* foo */
+  Åc
+#endif /* foo */
+#ifndef foo
+  Åc
+#endif /* not foo */
+
+  

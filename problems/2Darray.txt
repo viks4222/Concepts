@@ -1,0 +1,40 @@
+// Example program
+#include <iostream>
+#include <string>
+
+using namespace std;
+int m;
+void print(int** array);
+int** read(int* array[4]);
+int main()
+{    
+
+cin>>m;
+int** board;
+board= new int*[4];
+board = read(board);
+print(board);    
+        
+  return 0;
+}
+
+void print(int** array){
+    for(int i=0; i<4; i++){
+    cout<<"\n";
+    for(int j =0; j<m; j++){
+        cout<<array[i][j]<<"\t";
+        }
+    }
+}
+
+int** read(int* array[4]){
+    for(int i=0;i<4;i++){
+    array[i]=new int[m];
+    }
+for(int i=0; i<4; i++){
+    for(int j =0; j<m; j++){
+        array[i][j]=j;
+        }
+    }
+    return array;
+}

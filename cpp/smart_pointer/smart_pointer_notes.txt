@@ -1,0 +1,27 @@
+Smart Pointers:
+	
+
+
+auto_ptr:
+it is a pointer that serves as owner of the object to which it refers. 
+So, an object gets destroyed automatically when its auto_ptr gets destroyed.
+
+auto_ptr does not allow us to initialize an object with an ordinary pointer by using the assignment syntax. 
+So, we must initialize the auto_ptr directly by using its value.
+
+std::auto_ptr<ClassA> ptr1(new ClassA);	        // RIGHT
+std::auto_ptr<ClassA> ptr1 = new ClassA;		// WRONG
+
+Only one auto_ptr at a time can own a dynamically allocated object.
+
+shared_ptr:
+alternative to auto_ptr
+referencing-counting smart pointer
+
+Since copying boost::shared_ptr works as we expect, it can be used in STL containers while we cannot use std::auto_ptr 
+for STL containers.
+shared_ptr holds an internal pointer to a resource such as a dynamically allocated object that may be shared with 
+other objects in the program
+The internal pointer is deleted once the last shared_ptr to the resource is destroyed. 
+shared_ptr uses reference counting to determine how many shared_ptrs point to the resource
+

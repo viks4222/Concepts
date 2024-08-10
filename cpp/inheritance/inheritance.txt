@@ -1,0 +1,82 @@
+Object:
+instance of class,It can store data,perform operation on itself.
+
+data abstraction type - provide essential info to outside world hiding background details
+oops: creating abstract data types called class
+
+public: accessible to all
+private: only accessible to the objects of the same class
+protected:accessible to all the inherited classes
+
+
+class members are default private whereas structures are default public
+	
+	aggregation
+	composition
+	
+	inheritance :
+	public -> public members of base class remains public members of derived class
+			  protected remains protected
+	protected -> public becomes protected
+				 protected becomes protected
+	private -> public becomes private
+				protected becomes private 
+				
+Name mangling- To distinguish different functions at the time of generating object code ,
+the compiler adds additional information about function arguments.
+
+
+ Inheritance:
+The capability of a class to derive properties and characteristics from another class is called Inheritance. 
+Inheritance is one of the most important feature of Object Oriented Programming.
+Sub Class: The class that inherits properties from another class is called Sub class or Derived Class.
+Super Class:The class whose properties are inherited by sub class is called Base Class or Super class.
+
+Modes of Inheritance
+
+Public mode: If we derive a sub class from a public base class. Then the public member of the base class
+ will become public in the derived class and protected members
+ of the base class will become protected in derived class. 
+ Private members of the base class will never get inherited in sub class.
+
+ Protected mode: If we derive a sub class from a Protected base
+ class. Then both public member and protected members of the base class will become protected in derived class.
+ Private members of the base class will never get inherited in sub class.
+
+ Private mode: If we derive a sub class from a Private base class. 
+Then both public member and protected members of the base class 
+will become Private in derived class. Private members of the base class will never get inherited in sub class 
+
+Types of Inheritance in C++
+
+ 1.Single Inheritance: In single inheritance, a class is allowed to inherit from only one class.
+ i.e. one sub class is inherited by one base class only.
+ 
+ 2.Multiple Inheritance: Multiple Inheritance is a feature of C++ where a class can inherit from more than one classes. 
+ i.e one sub class is inherited from more than one base classes.
+
+ 3.Multilevel Inheritance: In this type of inheritance, a derived class is created from another derived class
+
+ 4.Hierarchical Inheritance: In this type of inheritance, more than one sub class is inherited from a single base class. 
+ i.e. more than one derived class is created from a single base class.
+ 
+ 5.Hybrid (Virtual) Inheritance: Hybrid Inheritance is implemented by combining more than one type of inheritance. 
+ For example: Combining Hierarchical inheritance and Multiple Inheritance.
+
+Problem in Multiple inheritance:
+The diamond problem:
+The diamond problem occurs when two superclasses of a class have a common base class. For example, in the following diagram,
+the TA class gets two copies of all attributes of Person class, this causes ambiguities 
+
+To resolve the prob Virtual keyword is used in those two superclasses
+ 
+ 
+ **IS A relationship:
+ 
+ Rose is a Flower:
+ 
+ Rose is a specialization of flower.
+ Flower is a generalization of Rose.
+ 
+ 
+ Derived class can override and overload the Base class functions.

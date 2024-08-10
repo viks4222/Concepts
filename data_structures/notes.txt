@@ -1,0 +1,57 @@
+
+1.SEARCHING
+2.SORTING
+3.TREE
+4.GRAPH
+5.STACK
+6.QUEUE
+7.LINKED LIST
+
+
+STLs:
+1.CONTAINERS
+
+
+
+1.SEARCHING:
+linear search: compares for every ele.
+binary search :
+	recursively searches for the data within a set of ele (lb,ub)  using mid .
+	mid = lb + (ub-lb)/2
+	(arr[mid]> data)
+			-> binary_search()
+	
+	
+jump_search:
+
+take step = sqrt(MAX_SIZE);
+
+
+
+
+
+
+
+
+2.SORTING:
+
+bubble sort:
+swapping two adjacent ele. 
+
+
+selection sort:
+swap minindex and bring it to the sorted position.
+
+
+insertion sort:
+card anomaly
+put unsorted ele to sorted array.
+
+ 
+
+
+
+
+
+
+	

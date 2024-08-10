@@ -1,0 +1,502 @@
+https://www.bogotobogo.com/cplusplus/multithreaded.php
+
+Thread:
+	1.Smallest unit of processing
+	2.Scheduled by OS.
+	3.Contained in process: multiple threads can exist in same process.
+	4. Shares the resource like memory, code(instructions), global variables
+	5.Each thread has its own stack.
+
+Multithreading:
+	1.Application that has more than one thread of execution within the application itself is called multhreaded application.
+	2.Main thread can start new threads by creating the objects of Thread subclass.
+	Typically, they use shared variables together by using a resource protection mechanism such as mutextes, semaphores, or wait conditions, etc.
+The key advantage of multithreading code is that all threads see the same memory. So, data is already shared between threads
+
+
+Threads vs. Processes
+	Processes and threads are related to each other but are fundamentally different.
+	1.A process can be thought of as an instance of a running program. 
+	2.Each process is an independent entity to which system resources such as CPU time, memory,etc. are 
+	allocated and each process is executed in a separate address space. If we want to access another process' resources,
+ 	3.inter-process communications have to be used such as pipes, files, sockets etc.
+	4.Processes are independent while thread is within a process.
+	5.Processes have separate address spaces while threads share their address spaces.
+	6.Processes communicate each other through inter-process communication.
+	7.Processes carry considerable state (e.g., ready, running, waiting, or stopped) information, 
+	whereas multiple threads within a process share state as well as memory and other resources.
+	8.Context switching between threads in the same process is typically faster than context switching between processes.
+	9.Multithreading has some advantages over multiple processes. Threads require less overhead to manage than processes, 
+	and intraprocess thread communication is less expensive than interprocess communication.
+	10.Multiple process concurrent programs do have one advantage: Each process can execute on a different machine (distribute program). 
+	Examples of distributed programs are file servers (NFS), file transfer clients and servers (FTP), 
+	remote log-in clients and servers (Telnet), groupware programs, and Web browsers and servers.
+
+
+
+Message Passing vs. Shared Memory
+Message Passing
+	1.Message passing exchanges data via inter-process communication(IPC) mechanisms.
+	
+	2.Message passing is communication between :
+		1.different threads within a process
+		2.different processes running on the same node
+		3.different processes running on different nodes
+	3.The two main dimensions
+		1.Synchronous vs. asynchronous
+		2.Symmetric or asymmetric process/thread naming
+			Symmetric:One sender and one receiver.
+			Asymmetric:Here the receiver will accept a message from any sender. The sender can pass its own id inside the message if it wants.
+	4.Pros: Generalizes to both local & remote communication.
+	5.Cons: May incur excess overhead for large messages in a "loop-back" configuration.
+
+Shared Memory
+	1.Shared memory allows apps to access & exchange data as though they were local to address space of each process.
+	2.A shared memory is an extra piece of memory that is attached to some address spaces for their owners to use. 
+	As a result, all of these processes share the same memory segment and have access to it.
+	Consequently, race conditions may occur if memory accesses are not handled properly.
+ 	3.shared memory segment is identified by a unique integer, the shared memory ID. 
+ 	4.The shared memory itself is described by a structure of type shmid_ds in header file sys/shm.h. 
+ 	To use this file, files sys/types.h and sys/ipc.h must be included. Therefore, your program should start with the following lines:
+ 		#include  <sys/types.h>
+		#include  <sys/ipc.h>
+		#include  <sys/shm.h>
+
+	5.For a server, it should be started before any client. The server should perform the following tasks:
+		1.Ask for a shared memory with a memory key and memorize the returned shared memory ID. This is performed by system call shmget().
+		2.Attach this shared memory to the server's address space with system call shmat().
+		3.Initialize the shared memory, if necessary.
+		4.Do something and wait for all clients' completion.
+		5.Detach the shared memory with system call shmdt().
+		6.Remove the shared memory with system call shmctl().
+	6.For the client part, the procedure is almost the same:
+		1.Ask for a shared memory with the same memory key and memorize the returned shared memory ID.
+		2.Attach this shared memory to the client's address space.
+		3.Use the memory.
+		4.Detach all shared memory segments, if necessary.
+		5.Exit.
+
+	7.Pros: Can be more efficient for large messages in loop-back configuration.
+	8.Cons: Doesn't generalize efficiently to remote systems & can be more error-prone & non-portable for OO apps.
+
+ 
+Multiprocessing vs. Multithreading
+Multiprocessing
+	1.A process is the unit of resource allocation & protection.
+	2.A process manages certain resources, e.g., virtual memory, I/O handlers, and signal handlers.
+	3.Pros: Process is protected from other processes via an MMU.
+	4.Cons: IPC between processes can be complicated and inefficient.
+
+Multithreading
+	1.A thread is the unit of computation that runs in the context of a process.
+	2.A thread manages certain resources, e.g., stack, registers, signal masks, priorities, and thread-specific data
+	3.Pros: IPC between threads is more efficient that IPC between processes.
+	4.Cons: Threads can interfere with each other.
+ 
+A Critical section is a piece of code where a process or thread accesses a common resource. 
+
+Process vs Kernel
+
+
+	In Linux systems, a kernel knows and controls everything of a running system but a process does not. 
+	A process is an instance of an executing program. When a program is executed, the kernel loads the code of the program into virtual memory,
+	allocates space for program variables, and sets up kernel bookkeeping data structures to record various information
+	(such as process ID, termination status, user IDs, and group IDs) about the process.
+
+Kernel:	
+	The kernel facilitates the running of all processes on the system.
+	The kernel decides which process will next obtain access to the CPU, when it will do so, and for how long.
+	The kernel maintains data structures containing information about all running processes and updates these structures as processes are created,
+	change state, and terminate.
+	The kernel maintains all of the low-level data structures that enable the filenames used by programs to be translated into physical locations
+	on the disk.
+	The kernel also maintains data structures that map the virtual memory of each process into the physical memory of the computer and the swap 
+	area(s) on disk.
+	All communication between processes is done via mechanisms provided by the kernel. In response to requests from processes, the kernel 
+	creates new processes and terminates existing processes.
+	Lastly, the kernel (in particular, device drivers) performs all direct communication with input and output devices,
+	transferring information to and from user processes as required. 
+Process:
+	A running system typically has numerous processes.
+	For a process, many things happen asynchronously.
+	An executing process doesn't know when it will next time out, which other processes will then be scheduled for the CPU
+	(and in what order), or when it will next be scheduled. The delivery of signals and the occurrence of interprocess communication
+	events are mediated by the kernel, and can occur at any time for a process.
+	Many things happen transparently for a process. A process doesn't know where it is located in RAM or, in general, whether a particular 
+	part of its memory space is currently resident in memory or held in the swap area (a reserved area of disk space used to supplement
+	the computer's RAM).
+	Similarly, a process doesn't know where on the disk drive the files it accesses are being held; it simply refers to the files by name.
+	A process operates in isolation; it can't directly communicate with another process.
+	A process can't itself create a new process or even end its own existence. Actually, a process can create a new process using the fork() system call. The process that calls fork() is referred to as the parent process, and the new process is referred to as the child process. The kernel creates the child process by making a duplicate of the parent process.
+	Finally, a process can't communicate directly with the input and output devices attached to the computer.
+
+
+
+Scheduling Methods in RTOS
+1.Preemptive(temporarily interrupting a task):
+	1.Each Task has a priority relative to all other tasks
+	2.The most critical Task is assigned the highest priority
+	3.The highest priority Task that is ready to run gets control of the processor
+	4.A Task runs until it yields, terminates, or blocks
+	5.Each Task has its own memory stack
+	6.Before a Task can run it must load its context from its memory stack (this can take many cycles)
+	7.If a Task is preempted it must save its current state/context; this context is restored when the Task is given control of the processor
+
+	8.In this preemptive scheduling a thread (or a process) must be in one of the following four states:
+		1.Running - the task is in control of the CPU
+		2.Ready - the task is not blocked and is ready to receive control of the CPU when the scheduling policy indicates it is the highest priority task in the system that is not blocked.
+		3.Inactive - the task is blocked and requires initialization in order to become ready.
+		4.Blocked - the task is waiting for something to happen or for a resource to become available.
+
+2.Round Robin
+	1.In this method, time slices are assigned to each process in equal portions and in circular order,
+ 	handling all processes without priority (also known as cyclic executive). Round-robin scheduling is simple, 
+ 	easy to implement, and starvation-free.
+
+ 	
+Priority Inversion:
+	To ensure rapid response times, an embedded RTOS can use preemption (higher-priority task can interrupt a low-priority task that's running). 
+	When the high-priority task finishes running, the low-priority task resumes executing from the point at which it was interrupted.
+	Unfortunately, the need to share resources between tasks operating in a preemptive multitasking environment can create conflicts. 
+	Along with a deadlock, the priority inversion is one of the two of the most common problems which can result in application
+	failure. (Mars Pathfinder mission)
+ 	eg.
+ 		The typical example is a medium priority task (M) preempts a high priority task, resulting in a priority inversion. 
+ 		A low priority process (L) acquiring a resource that a high priority process (H) wants to access, but being preempted by
+ 	 	a medium priority process (M), so the high priority process (H) is blocked on the resource while the medium priority
+ 	  	one (M) finishes. This can occur when any third task of medium priority (M) becomes runnable during low priority process' 
+ 	  	use of resource. Once high priority task becomes unrunnable, third task of medium priority (M) is the highest priority 
+ 	  	runnable task, thus it runs and while it does L cannot relinquish the resource. So in this scenario, the medium priority
+ 	  	task (M) preempts the high priority task (H), resulting in a priority inversion.
+
+	To avoid priority inversion, 
+		the priority is set (hoisted) to a predefined priority higher than or equal to the highest priority of all the
+		threads that might lock the particular mutex. This is known as Priority Ceiling.
+		When a task acquires a shared resource, the task is hoisted (has its priority temporarily raised) to the priority ceiling of 
+		that resource (This unconditional hoist is the different from the priority inheritance). The priority ceiling must be higher 
+		than the highest priority of all tasks that can access the resource to ensure that a task owning a shared resource won't be 
+		preempted by any other task attempting to access the same resource. When the hoisted task releases the resource, the task is
+		returned to its original priority level.
+		An alternative to the priority ceiling is the priority inheritance, a variation that uses dynamic priority adjustments.
+		When a low-priority task acquires a shared resource, the task continues running at its original priority level. 
+		If a higher-priority thread requests ownership of the shared resource, the low-priority task is hoisted to the priority 
+		level of the requesting thread (the higher-priority thread waiting for the mutex) by inheriting that priority. The low-priority
+		task can then continue executing its critical section until it releases the resource. Once the resource is released, the task 
+		is dropped back to its original low-priority level, permitting the high-priority task to use the resource it has just acquired.
+		Because the majority of locks in real-time applications aren't contended, the priority inheritance protocol has good average-case performance. When a lock isn't contended, priorities don't change; there is no additional overhead.
+
+Invariants:
+	Invariants is one of the widely used concepts to help programmers reason about their code. The invariants-statements that are always
+	true about a particular data structure, such as linked list. These invariants are often broken during an update, especially if
+	the data structure is of any complexity the update requires modification of more than one value.
+	Let's think about a doubly linked list, where each node holds a pointer to both the next node in the list and the previous one.
+	One of the Invariants is that if we follow a next pointer from one node (1) to another (2), the previous pointer from that 
+	node (2) points back to the first node (1). In order to remove a node from the list, the nodes on either side have to be updated to point to
+	each other. Once one has been updated, the invariant is broken until the node on the other side has been updated too.
+	Only after all the updates necessary have completed, the invariant holds again. The steps in deleting an entry from such a list are:
+		Identify the node to delete, n.
+		Update the link from the node prior to n to point to the node after n.
+		Update the link from the node after n to point to the node prior to n.
+		Delete node n.
+	However, when the links going in one direction could become inconsistent with the links going in the opposite direction, and 
+	the invariant is broken.
+	Broken invariant is the simplest potential problem with modifying data shared between threads. If we don't do anything 
+	special to ensure otherwise, if one thread is reading the doubly linked list while another is removing a node, it's quite 
+	possible for the reading thread to see the list with a node only partially removed (because only one of the links has been changed)
+	, so the invariant is broken.
+
+	The consequences of this broken invariant can vary. If the other thread is just reading the list items from left to right, it will
+ 	skip the node being deleted. On the other hand, if the second thread is trying to delete the rightmost node in the list, it might
+ 	end up permanently corrupting the data structure and eventually 
+ 	crashing the program. Whatever the outcome, this is an example of one of the most common causes of bugs in concurrent code: a race condition.
+
+fork() system call vs. creating a thread
+	We need to be clear about the difference between the fork() system call and the creation of new threads.
+	When a process executes a fork() call, a new copy of the process is created with its own variables and its own process id (PID),
+	and this new process is scheduled independently, and executed almost independently of the parent process.
+	When we create a new thread within a process, on the other hand, the new thread gets its own stack (local variables) but shares 
+	global variables, file descriptors, signal handlers, and its current directory state with the process which created it.
+
+Thread pool vs. On-demand thread
+	Multiprocessing
+		Prespawn threads to amortize creation costs via eager spawning strategies.
+	On-demand thread spawning
+		Used to implement thread-per-request and thread-per-connection models.
+	Pros: Reduces wasted resource consumption of unused prespawned threads.
+	Cons: Can degrade performance in heavily loaded servers and determinism due to overhead of spawning threads and starting services.
+
+Advantage of Multi-Threading
+	Faster on a multi-CPU system.
+	Even in a single CPU system, application can remain responsive by using worker thread runs concurrently with the main thread.
+
+Identifying Multithread Opportunities
+	So, multithreading is a good thing. How can we identify multithreading oppurtinities in codes?
+	We need runtime profile data of our application. Then, we can identify the bottleneck of code.
+	Eaxmine the region, and check for dependencies. Then, determine whether the dependencies can be broken into either
+	multiple parallel task, or
+	loop over multiple parallel iteration.
+	At this stage, we may consider a different algorithm.
+	We need to estimate the overhead and performance gains. Will it give us linear scaling with the number of thread?
+	If the scaling does not look promising, we may have to broaden the scope of our analysis.
+
+Context Switch
+	Switching the CPU from one process or thread to another is called context switch. It requires saving the state of the old process 
+	or thread and loading the state of the new one. Since there may be several hundred context switches per second, context switches 
+	can potentially add significant overhead to an execution.
+	Context switch is implemented using exception control flow.
+
+
+Race Condition
+	This section is mostly from the book "C++ Concurrency in Action Practical Multithreading" by Anthony Williams.
+	In concurrency, a race condition is anything where the outcome depends on the relative ordering of execution of operations 
+	on two or more threads where the threads race to perform their respective operations. Most of the time, this is quite benign 
+	because all possible outcomes are acceptable, even though they may change with different relative orderings. 
+	For example, if two threads are adding items to a queue for processing, it generally doesn't matter which item gets added first, 
+	provided that the invariants of the system are maintained.
+	It's when the race condition leads to broken invariants that there's a problem, such as with the doubly linked list example mentioned 
+	in Invariants section of this chapter.
+	When talking about concurrency, the term race condition is usually used to mean a problematic race condition; benign race condition 
+	is not so interesting and should not be a cause of bugs. The C++ Standard also defines the term data race to mean the specific type 
+	of race condition that arises because of concurrent modification to a single object such that data races cause the undefined behavior.
+	This happens when a critical section is not executed atomically.
+	An execution of threads depends on shared state. For example, two threads share variable i and trying to increment it by 1. 
+	It is highly dependent on when they get it and when they save it.
+	Typically, problematic race conditions occur where completing an operation requires modification of two or more distinct pieces of data, 
+	such as the two link pointers in the example of Invariants section. Because the operation must access two separate pieces of data, 
+	these must be modified in separate instructions, and another thread could potentially access the data structure when only one of 
+	them has been completed.
+	Race conditions can often be hard to find and hard to duplicate because the window of opportunity is small. If the modifications 
+	are done as consecutive CPU instructions, the chance of the problem exhibiting on any one run-through is very small, even if the 
+	data structure is being accessed by another thread concurrently. As the load on the system increases, and the number of times 
+	the operation is performed increases, the chance of the problematic execution sequence occurring also increases. It's almost 
+	inevitable that such problems will show up at the most inconvenient time.
+	Because race conditions are generally timing sensitive, they can often disappear entirely when the application is run under the debugger, 
+	because the debugger affects the timing of the program, even if only slightly.
+
+	If we are writing multithreaded programs, race conditions can easily be the bane of our life. A great deal of the complexity in writing software that uses concurrency
+	comes from avoiding problematic race conditions.
+	There are several ways to deal with problematic race conditions. The simplest option is to wrap your data structure with a 
+	protection mechanism, to ensure that only the thread actually performing a modification can see the intermediate states where 
+	the invariants are broken. From the point of view of other threads accessing that data structure, such modifications 
+	either haven't started or have completed.
+	Another option is to modify the design of your data structure and its invariants so that modifications are done as a series 
+	of indivisible changes, each of which preserves the invariants. This is generally referred to as lock-free programming and is 
+	difficult to get right. If we're working at this level, the nuances of the memory model and identifying which threads can potentially 
+	see which set of values can get complicated.
+
+	Another way of dealing with race conditions is to handle the updates to the data structure as a transaction, just as updates to 
+	a database are done within a transaction. The required series of data modifications and reads is stored in a transaction log and 
+	then committed in a single step. If the commit can't proceed because the data structure has been modified by another thread, the 
+	transaction is restarted. This is termed software transactional memory (STM), and currently, it's an active research area.
+
+	The most basic mechanism for protecting shared data is probably the mutex.
+	Suppose, two person A and B share the same account and try to deposit roughly at the same time. In the following example, they deposited 
+	1$ million times. So, we expect the balance would be $2,000,000. However, it turns out that's not the case as we see from the output:
+
+	// global1.c
+	#include <stdio.h>
+	#include <pthread.h>
+
+	static volatile int balance = 0;
+
+	void *deposit(void *param)
+	{
+    	char *who = param;
+
+	    int i;
+    	printf("%s: begin\n", who);
+    	for (i = 0; i < 1000000; i++) {
+        	balance = balance + 1;
+    	}
+    	printf("%s: done\n", who);
+    	return NULL;
+	}
+
+	int main()
+	{
+    	pthread_t p1, p2;
+    	printf("main() starts depositing, balance = %d\n", balance);
+    	pthread_create(&p1;, NULL, deposit, "A");
+   	 	pthread_create(&p2;, NULL, deposit, "B");
+
+    	// join waits for the threads to finish
+    	pthread_join(p1, NULL);
+    	pthread_join(p2, NULL);
+    	printf("main() A and B finished, balance = %d\n", balance);
+    	return 0;	
+	}
+
+	Output:
+
+	$ ./global
+	main() starts depositing, balance = 0
+	B: begin
+	A: begin
+	B: done
+	A: done
+	main() A and B finished, balance = 1270850
+	----
+	$ ./global
+	main() starts depositing, balance = 0
+	B: begin
+	A: begin
+	B: done
+	A: done
+	main() A and B finished, balance = 1423705
+
+	
+	
+	
+Deadlock:
+
+Two or more competing actions are waiting for other to finish. No threads are changing their states.
+
+In other words, deadlock occurs when some threads are blocked to acquire resources held by other blocked threads. 
+A deadlock may arise due to dependence between two or more threads that request resources and two or more 
+threads that hold those resources.
+Eg. Dining Philosophers Problem
+
+
+Example: Two threads want to acquire mutex locks A and B to finish their task. 
+Suppose thread 1 has already acquired lock A and thread 2 has already acquired B. 
+Then, thread 1 cannot make progress because it is waiting for lock B, 
+and thread 2 cannot make progress because it is waiting for lock A. So, the two thread are in deadlock
+	
+How to avoid deadlock
+
+Don't request another resource while holding one resource.
+If you ever need to acquire two locks at once acquire locks in a fixed order.
+Don't wait for another thread if there's a chance it's waiting for you.
+Try to avoid holding locks for longer than we need to.
+
+Livelock:
+	When both the process can change the state but no progress is happening.
+A situation that process is not progressing. Example: When two people meet at narrow path, and both of them are repeatedly trying to yield to the other person. 
+Both are changing their states but with no progress.	
+A thread often acts in response to the action of another thread. If the other thread's action is also a response to the action of another thread, then livelock may result. As with deadlock, livelocked threads are unable to make further progress. 
+However, the threads are not blocked - they are simply too busy responding to each other to resume work.
+
+Eg. Dining Philosophers Problem
+
+
+Starvation:
+When a process having been denied necessary resources. Without the resources the program can not finish.
+Eg. Dining Philosophers Problem
+occur independently of deadlock if a philosopher is unable to acquire both forks because of a timing problem
+Example: An object provides a synchronized method that often takes a long time to return. If one thread invokes this method frequently, other threads that also need frequent synchronized access to the same object will often be blocked.
+
+Disadvantages of Locks
+	1.Performance degradation due to wait period
+		solution:
+		Restricting our locks only to code that must be executed atomically will allow us to write multithreaded 
+		components that ensure the safety of our data while still maintaining good performance.
+	2.Deadlocks:
+		Execute in an order and dont wait for another thread.
+		
+here are two types of synchronization:
+1. Mutual Exclusion
+	Mutual exclusion ensures that a group of atomic actions (critical section cannot be executed by more than one thread at a time). 
+2. condition syncronization		
+A condition variable provides a different type of synchronization than a mutex, readers/writer, or semaphore lock. 
+While the latter three mechanisms make other threads wait while the thread holding the lock executes code 
+in a critical section, a condition variable allows to coordinate and schedule its own processing 
+(note: semaphore can be used condition sync by signaling the condition to other threads).
+This ensures that the state of a program satisfies a particular condition before some action occurs. 
+
+For example, in the bank account problem, there is a need for both condition synchronization and mutual 
+exclusion. The balance must not be in an empty condition before method withdraw() is executed, and 
+mutual exclusion is required for ensuring that the withdraw not be executed more than once.
+
+
+Critical Section:
+
+A code segment that accesses shared variable (or other shared resources) and that has to be executed as an 
+atomic action is referred to as a critical section
+
+
+Semaphores:
+Semaphores are counters that can be either incremented or decremented.
+Semaphores can also be used to mimic mutexes. If there is only one element in the semaphore, then it can be either acquired or available, exactly as a mutex can be either locked or unlocked.
+
+Semaphores will also signal or wake up threads that are waiting on them to use available resources. So, they can be used for signaling between threads.
+
+Semaphores are used to provide mutual exclusion and condition synchronization.
+
+Types:
+
+1. Binary semaphore:
+  semaphore named mutex is initialized with the value of 1. The calls to mutex.P() and mutex.V() 
+  create a critical section:
+
+2. counter sempahore
+A counting semaphore is a synchronization object that is initialized with an integer value and then accessed through two operations, named P and V, meaning down, up or decrement, increment, wait, signal, respectively (Dijkstra).
+
+
+Semaphores vs Mutexes
+Semephore is another generaliztion of mutexes, and semaphores can be used to guard a certain number of identical 
+resources
+A mutex (binary semaphore) allows only the thread that locks it to have access to the protected resource. 
+Semaphore can be signalled by any of the thread by using sem_post() for pThread but a mutex can be unlocked
+only by the thread which owns it
+
+1.Mutexes have a concept of an owner, which is the process that locked the mutex. Only the process that locked 
+the mutex can unlock it. In contrast, a semaphore has no concept of an owner. Any process can unlock a semaphore.
+2.Unlike semaphores, mutexes provide priority inversion safety. Since the mutex knows its current owner, 
+it is possible to promote the priority of the owner whenever a higher-priority task starts waiting on the mutex.
+3.Mutexes also provide deletion safety, where the process holding the mutex cannot be accidentally deleted. 
+Semaphores do not provide this.
+
+
+Monitors:
+A monitor encapsulates shared data, all the operations on the data, and any synchronization required for accessing 
+the data. A monitor has separate constructs for mutual exclusion and condition synchronization. In fact, mutual 
+exclusion is provided automatically by the monitor's implementation, freeing the programmer from the burden of 
+implementing critical sections.
+
+
+
+Memory Barrier:
+A memory barrier is a type of nonblocking synchronization tool used to ensure that memory operations occur 
+in the correct order. A memory barrier acts like a fence, forcing the processor to complete any load and 
+store operations positioned in front of the barrier before it is allowed to perform load and store 
+operations positioned after the barrier.
+
+
+Volatile Variable:
+Applying the volatile keyword to a variable forces the compiler to load that variable from memory each time 
+it is used. We may declare a variable as volatile if its value could be changed at any time by an external 
+source that the compiler may not be able to detect.
+
+volatile variables limits the compiler performance of optimizations, it should be used sparingly and 
+only where needed to ensure correctness.
+
+If we are already using a mutex to protect a section of code, do not automatically assume we need to use 
+the volatile keyword to protect important variables inside that section. A mutex includes a memory barrier 
+to ensure the proper ordering of load and store operations.
+
+The volatile keyword only ensures that a variable is loaded from memory rather than stored in a register. 
+The volatile keyword does not ensure that the variable is accessed correctly by our code.
+
+
+Thread Safe:
+A code is thread safe if it functions correctly in concurrent executions by multiple threads.
+
+We can say a function is thread safe when it can safely be called from different threads simultaneously. The result is always defined if two thread safe functions are called concurrently. A class is thread safe when all of its functions can be called from different threads simultaneously without inferring with each other, even when operating on the same object.
+
+To check if a piece of code is safe:
+
+When it accesses global variable.
+Alloc/realloc/freeing resources of global scope.
+Indirect access through handles or pointers.
+To achieve a thread safety.
+
+Atomic operations - available runtime library (machine language instructions).
+Mutex
+Using Re-entrancy.
+
+
+
+No of threads:
+stack size / swap(size of virtual space)
+No of processors:
+cat /proc/cpuinfo on linux system, we will get the number of processors

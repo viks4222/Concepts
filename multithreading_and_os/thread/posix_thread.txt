@@ -1,0 +1,122 @@
+https://www.bogotobogo.com/cplusplus/multithreading_pthread.php
+https://www.cs.cmu.edu/afs/cs/academic/class/15492-f07/www/pthreads.html
+What are Pthreads?
+POSIX Threads, or Pthreads, is a POSIX standard for threads. The standard, POSIX.1c, Threads extensions (IEEE Std 1003.1c-1995), defines an API for creating and manipulating threads.
+Implementations of the API are available on many Unix-like POSIX systems such as FreeBSD, NetBSD, GNU/Linux, Mac OS X and Solaris, but Microsoft Windows implementations also exist. For example, the pthreads-w32 is available and supports a subset of the Pthread API for the Windows 32-bit platform.
+The POSIX standard has continued to evolve and undergo revisions, including the Pthreads specification. The latest version is known as IEEE Std 1003.1, 2004 Edition.
+Pthreads are defined as a set of C language programming types and procedure calls, implemented with a pthread.h header file. In GNU/Linux, the pthread functions are not included in the standard C library. They are in libpthrea, therefore, we should add -lpthread to link our program.
+
+
+
+The Pthread API
+Pthreads API can be grouped into four:
+
+Thread management:
+	Routines that work directly on threads - creating, detaching, joining, etc. They also include functions to set/query thread attributes such as joinable, scheduling etc.
+
+Mutexes:
+	Routines that deal with synchronization, called a "mutex", which is an abbreviation for "mutual exclusion". Mutex functions provide for creating, destroying, locking and unlocking mutexes. These are supplemented by mutex attribute functions that set or modify attributes associated with mutexes.
+
+Condition variables:
+	Routines that address communications between threads that share a mutex. Based upon programmer specified conditions. This group includes functions to create, destroy, wait and signal based upon specified variable values. Functions to set/query condition variable attributes are also included.
+
+Synchronization:
+	Routines that manage read/write locks and barriers.
+
+
+Creating Threads
+
+Our main() program is a single, default thread. All other threads must be explicitly created by the programmer.
+
+pthread_create creates a new thread and makes it executable. 
+This routine can be called any number of times from anywhere within our code.
+
+pthread_create (pthread_t *thread, pthread_attr_t *attr, void *(*start_routine)(void *), void *arg) arguments: 
+
+thread: 
+An identifier for the new thread returned by the subroutine. This is a pointer to pthread_t structure.
+ When a thread is created, an identifier is written to the memory location to which this variable points. 
+ This identifier enables us to refer to the thread.
+
+attr: 
+An attribute object that may be used to set thread attributes. We can specify a thread attributes object, 
+or NULL for the default values.
+
+start_routine: 
+The routine that the thread will execute once it is created
+void *(*start_routine)(void *)
+
+We should pass the address of a function taking a pointer to void as a parameter and the function will return 
+a pointer to void. So, we can pass any type of single argument and return a pointer to any type. 
+While using fork() causes execution to continue in the same location with a different return code, using a new 
+thread explicitly provides a pointer to a function where the new thread should start executing.
+
+arg: 
+A single argument that may be passed to start_routine. It must be passed as a void pointer. NULL may be used if no argument is to be passed.
+The maximum number of threads that may be created by a process is implementation dependent.
+
+Once created, threads are peers, and may create other threads. There is no implied hierarchy or dependency between threads.
+
+Attributes of Threads:
+	pthread_attr_init() and pthread_attr_destroy() are used to initialize/destroy the thread attribute object.
+	
+Terminating Threads
+
+The thread returns from its starting routine (the main routine for the initial thread).
+The thread makes a call to the pthread_exit subroutine.pthread_exit is used to explicitly exit a thread.
+The thread is canceled by another thread via the pthread_cancel routine
+The entire process is terminated due to a call to either the exec or exit subroutines.
+If main() finishes before the threads it has created, and exits with pthread_exit(), the other threads will continue to execute. Otherwise, they will be automatically terminated when main() finishes. 
+
+Cleanup: the pthread_exit() routine does not close files; any files opened inside the thread will remain open after the thread is terminated.
+
+
+Join:
+	int pthread_join (pthread_t th, void **thread_return)
+he first parameter is the thread for which to wait, the identified that pthread_create filled in for us. The second argument is a pointer to a pointer that itself points to the return value from the thread. This function returns zero for success and an error code on failure.
+When a thread is created, one of its attributes defines whether the thread is joinable or detached. Only threads that are created as joinable can be joined. If a thread is created as detached, it can never be joined.
+The final draft of the POSIX standard specifies that threads should be created as joinable.
+To explicitly create a thread as joinable or detached, the attr argument in the pthread_create() routine is used. The typical 4 step process is:
+Declare a pthread attribute variable of the pthread_attr_t data type.
+Initialize the attribute variable with pthread_attr_init().
+Set the attribute detached status with pthread_attr_setdetachstate()
+When done, free library resources used by the attribute with pthread_attr_destroy()
+
+
+The pthread_join() subroutine blocks the calling thread until the specified thread terminates.
+
+Detaching:
+Use when sometimes we neither need the second thread to return information to the main thread nor want the main thread to wait for it.
+The pthread_detach() routine can be used to explicitly detach a thread even though it was created as joinable.
+There is no converse routine.
+
+Mutex:
+
+A mutex lock is a mechanism that can be acquired by only one thread at a time
+most primitive synchronization variable. 
+It provides a single, absolute owner for the section of code (aka a critical section) 
+that it brackets between the calls to pthread_mutex_lock() and pthread_mutex_unlock(). 
+The first thread that locks the mutex gets ownership, and any subsequent attempts to lock it will fail, 
+causing the calling thread to go to sleep. When the owner unlocks it, one of the sleepers will be awakened, 
+made runnable, and given the chance to obtain ownership.
+
+
+Mutex Attributes:
+hough mutexes, by default, are private to a process, they can be shared between multiple processes. 
+To create a mutex that can be shared between processes, we need to set 
+up the attributes for pthread_mutex_init():
+
+ 1.pthread_mutex_init()
+	Initialize the mutex attribute
+2. pthread_mutexattr_setpshared()
+pthread_mutexattr_setpshared() with a pointer to the attribute structure and the value 
+PTHREAD_PROCESS_SHARED sets the attributes to cause a shared mutex to be created.	
+Mutexes are not shared between processes by default. Calling pthread_mutexattr_setpshared() with the 
+value PTHREAD_PROCESS_PRIVATE restores the attribute to the default.
+hese attributes are passed into the call to pthread_mutexattr_init() to set the attributes of the 
+initialized mutex. 
+3.pthread_mutexattr_destroy()
+Once the attributes have been used, they can be disposed of by a call to pthread_mutexattr_destroy().
+
+
+

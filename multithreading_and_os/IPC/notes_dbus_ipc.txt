@@ -1,0 +1,36 @@
+Dbus:
+
+System for IPC.
+Layers:
+	1. libdbus : allows comm betn two app.
+	2. msg daemon executable: routing mesgs from one app to another, built on libdubs
+	3.wrapper libraries and bindings  based on app fwk
+	
+Dbus prospective:
+	1.comm betn desktop applications in the same desktop session
+	2. communication between desktop session and operating system.
+	
+	
+Object path:
+		To refer objects , low level libdbus protocol and libdubus API provides object path for referring so that remote applications can refer to them.
+			name like a filesystem path.
+
+Methods and signals
+
+Interfaces:
+
+Each object supports one or more interfaces. Think of an interface as a named group of methods and signals, just as it is in GLib or Qt or Java. 
+Interfaces define the type of an object instance.
+
+DBus identifies interfaces with a simple namespaced string, something like org.freedesktop.Introspectable. Most bindings will map these interface 
+names directly to the appropriate programming language construct, for example to Java interfaces or C++ pure virtual classes			
+
+Proxies:
+ proxy object is a convenient native object created to represent a remote object in another process
+ 
+ . The low-level DBus API involves manually creating a method call message, sending it, then manually receiving and processing the method reply 
+ message. Higher-level bindings provide proxies as an alternative. Proxies look like a normal native object; but when you invoke a method on the 
+ proxy object, the binding converts it into a DBus method call message, waits for the reply message, unpacks the return value, and returns it 
+ from the native method..
+
+

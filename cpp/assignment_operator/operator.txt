@@ -1,0 +1,4 @@
+
+Assignment Operator:
+Invoked when already initialized object is assigned to existing object.
+memory leak?

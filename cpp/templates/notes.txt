@@ -1,0 +1,113 @@
+
+We use templates when we need functions/classes that apply the same algorithm to a several types. 
+So we can use the same function/class regardless of the types of the argument or result
+
+
+The compiler then generates a specific class or function when we later provide specific types as arguments. 
+In a sense, templates provide static (compile-time) polymorphism,
+
+We can think of a class template as a type generator
+
+
+template instantiation: 
+
+template <class T> function_declaration;
+template <typename T> function_declaration;
+
+Ex.
+void f(vector<string>&v;)
+{
+    v.push_back("Steve Jobs");
+}
+The compiler, when it sees v.push_back("Steve Jobs"), generates a function something like this
+ ("Programming Principles and Practice Using C++" by Stroustrup, 2009)
+
+void vector<string>::push_back(const string& s){...}
+from the following template definition:
+
+template<typename T>
+void vector<T>::push_back(const T& s){...}
+
+
+Template specialization:
+The process of generating types from a given template arguments is called specialization or template instantiation. 
+For example, vector<int> and vector<Node*> are said to be a specialization of vector.
+
+	
+So, what do people actually use template for?
+
+When performance is essential.
+When flexibility in combining information from several types is essential.
+But note that, the flexibility and performance come at the cost of poor error diagnostics and poor error messages.
+
+
+
+
+
+Another ex.
+
+template <typename T>
+class Stack
+{
+public:
+	void push(T val);
+	T pop();
+	bool isEmpty() const;
+private:
+	std:vector<T> mStack;
+};
+
+
+Template Parameters
+ T is the single template parameter specified in the Stack class	
+ 
+ Template Arguments
+ 
+These are substituted for template parameters during specialization. 
+In our example, given a specialization Stack<int>, the int is a template argument.
+
+
+Instantiation
+
+This is when the compiler generates a regular class, method, or function by substituting each of the template's 
+parameters with a concrete type. This can happen implicitly when we create an object based on a 
+template or explicitly if we want to control when the code generation happens. For instance, the following 
+code creates two specific stack instances and will normally cause the compiler to generate code for these 
+two different types:
+
+Stack<T> myIntStack;
+Stack<T> myStringStack; 
+
+
+Specialization
+
+When a template is instantiated, the resulting class, method, or function is called a specialization. 
+More specifically, this is an instantiated (or generated) specialization. However, the term specialization 
+can also be used when we provide a custom implementation for a function by specifying concrete types for 
+all the template parameters. The following is called an explicit specialization:
+
+
+tempate<>
+void Stack<int>::push(int val)
+{
+    // integer specific push implementation
+}
+
+
+
+
+Pros and Cons of Templates
+Pros
+
+It provides us type-safe, efficient generic containers and generic algorithms
+The main reason for using C++ and templates is the trade-offs in performance and maintainability outweigh 
+the bigger size of the resulting code and longer compile times.
+The drawbacks of not using them are likely to be much greater.
+Cons
+
+Templates can lead to slower compile-times and possibly larger executable.
+Compilers often produce incomprehensible poor error diagnostics and poor error messages.
+The design of the STL collections tends to lead to a lot of copying of objects. The original smart pointer, 
+std::auto_ptr, wasn't suitable for use in most collections. Things could be improved if we use other smart 
+pointers from boost or C11.
+

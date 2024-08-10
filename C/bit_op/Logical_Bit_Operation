@@ -1,0 +1,21 @@
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    long int num = 0x8E2A3B4C; 
+     int a = (num & 0xFF000000) >> 24;     
+     int b = (num & 0x00FF0000) >> 16; 
+     int c = (num & 0x0000FF00) >> 8; 
+     int d = (num & 0x000000FF); 
+
+    
+    printf("a=%x\n",a);
+    printf("b=%x\n",b);
+    printf("c=%x\n",c);
+    printf("d=%x\n",d);
+    
+    return 0;
+}

@@ -1,0 +1,27 @@
+
+Singleton design pattern:
+ownership is not reasonably assigned 
+global access is possible: static method for getting instance
+single instance - instance, constr, copy const, assgn operator are private
+aceess method  - public and static
+
+
+This design pattern and methodology ensures that only one instance of the C++ class is instantiated. 
+It assures that only one object is created and no more. 
+when there is a single resource, where there should only be a single object in charge of accessing the single resource. 
+The singleton pattern gives the class itself, the responsibility of enforcement of the guarantee that only one instance of the class will be allowed to be generated.
+It is often used for a logging class so only one object has access to log files.
+
+
+That the instance function returns a pointer to a static variable and thus is declared static.
+Only the class function Instance can call the constructor. Public access to the constructor is denied.
+The constructor, copy constructor and assignment operator are all private to ensure that the programmer using the singleton class can only create a single instance of the class using only the Instance() function.
+The life of the singleton instantiation is for the duration of the application.
+
+
+They carry state around for the lifetime of the application. 
+Another hit to testing since you can end up with a situation where tests need to be ordered which is a big no no for unit tests. 
+Why? Because each unit test should be independent from the other.
+
+
+They inherently cause code to be tightly coupled.

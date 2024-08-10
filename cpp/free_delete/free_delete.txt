@@ -1,0 +1,14 @@
+
+difference betn free and delete:
+free - Deallocating memory block erlier allocated by  malloc ,calloc, realloc
+If ptr does not point to a block of memory allocated with the above functions, it causes undefined behavior.
+If ptr is a null pointer, the function does nothing.
+its a library function
+doesn't invoke destructor
+
+delete:
+Deallocates the memory block pointed to by ptr (if not null), releasing the storage space previously
+ allocated to it by a call to operator new[] and rendering that pointer location invalid.
+ its an opearator.
+ invokes destructor
+ fastrer than free.

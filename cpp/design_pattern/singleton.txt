@@ -1,0 +1,8 @@
+
+Singleton design pattern:
+ownership is not reasonably assigned
+global access is possible
+single instance - private
+aceess method  - public
+
+singelton code:

@@ -1,0 +1,11 @@
+
+Reference:
+a constant pointer, once initialized cannot be changed.
+alternative to existing variable.
+passbyref- Use when you dont have to reseat the arguments.
+use of references
+cannot declare void.  and it cant be NULL.
+less powerful
+Once reference created cant be changed ie. constant ptr.
+Must be initialized.
+safer and easier to use.

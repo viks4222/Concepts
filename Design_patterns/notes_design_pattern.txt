@@ -1,0 +1,30 @@
+https://www.bogotobogo.com/DesignPatterns/introduction.php
+https://www.bogotobogo.com/DesignPatterns/factorymethod.php
+https://www.bogotobogo.com/DesignPatterns/singleton.php
+https://www.geeksforgeeks.org/design-online-hotel-booking-system-like-oyo-rooms/
+
+
+
+Creational Patterns:
+
+Singleton:
+The Singleton pattern ensures a class has only one instance, and provides a global point of access to it.
+
+
+Factory Method:
+Defines an interface for creating an object, but let subclasses decide which class to instantiate. 
+Factory Method lets a class defer instantiation to subclasses. To name the method more descriptively, 
+it can be named as Factory and Product Method.
+
+
+Abstract Factory - Provide an interface for creating families of related or dependent objects without specifying 
+their concrete classes.
+Factories and products are the key elements to Abstract Factory pattern. Also the word families used in the 
+definition distinguishes Abstract Factory pattern from other creational patterns, which involve only one 
+kind of object.
+
+
+Builder - Separates object construction of a complex object from its representation so that the same construction process can create different representation. One example is the making different types of teas such as tea with sugar, tea with milk, and just a regular tea. The process of making those teas share common processes: boil water and put tea bags. Depending on the types, the added processes are such as put sugar, put milk, or nothing. 
+Builder: Builder is responsible for defining the construction process for individual parts. Builder has those individual processes to initialize and configure the product (teas).
+Director: Director takes those individual processes from the builder and defines the sequence to build the product.
+Product: Product is the final object which is produced from the builder and director coordination.

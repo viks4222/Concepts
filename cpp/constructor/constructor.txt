@@ -1,0 +1,145 @@
+Constructors in C++
+
+A constructor is a member function of a class which initializes objects of a class. 
+In C++,Constructor is automatically called when object(instance of class) created .It is special member function of the class.
+
+Constructors doesn't have return type
+
+If we do not specify a constructor, C++ compiler generates a default constructor for us (expects no parameters and has an empty body).
+
+Default Constructors: Default constructor is the constructor which doesn’t take any argument. It has no parameters.
+
+Parameterized Constructors: It is possible to pass arguments to constructors. Typically, these arguments help 
+initialize an object when it is created. To create a parameterized constructor,
+
+
+can destructor be private?
+Yes it is possible when destruction/lifecycle is being managed from another class.
+If the constructor/destructor is declared as private, then the class cannot be instantiated outside class.
+
+it can be instantiated from another method in the class. Similarly, if the destructor is private, then the object can only be 
+deleted from inside the class as well. 
+Also, it prevents the class from being inherited (or at least, prevent the inherited class from being instantiated/destroyed at all)
+
+
+constructor and destructor can be called explicitely.
+it is possible to call special member functions explicitly by programmer.
+When the constructor is called explicitly the compiler creates a nameless temporary object
+and it is immediately destroyed. That�s why 2nd line in the output is call to destructor.
+we should never call destructor explicitly on local (automatic) object,Local objects are automatically destroyed by compiler when they 
+go out of scope and this is the guarantee of C++ language.
+Constructor and destructor can also be called from the member function of class.
+
+
+#include <iostream> 
+using namespace std; 
+  
+class Test 
+{ 
+public: 
+    Test()  { cout << "Constructor is executed\n"; } 
+    ~Test() { cout << "Destructor is executed\n";  } 
+}; 
+  
+int main() 
+{ 
+    Test();  // Explicit call to constructor 
+    Test t; // local object 
+    t.~Test(); // Explicit call to destructor 
+    return 0; 
+}
+
+shallow copying:
+Default copy constructor and =operator function which is inserted by compiler incase they are missing from the class. 
+It performs a bit pattern copy i.e. simply copies data members of one object into another object.
+
+Deep copying:
+the data members copied will have a new memory adress.
+Deep copy (pointers must not be copied. instead seperate memory allocation for them) must be introduced. 
+So above code can be updated by introducing copy constructor and = operator function.	
+	
+* Copy Constructor is called when you want to initialize an object from the state of another object of same type - Thus object under
+ "Copy Construction" is not already initialized.
+* Default Copy constructor performs member-wise copy, so if the member variable has his own copy constructor then it is called. 
+* During Copy Assignment, object already has a initialized state, so in implementation you should first destroy the current state 
+ and then copy the state of the object on RHS. More advanced topic would be exception safety.
+* In your implementation I see a potential memory leak as int buffer allocated to "x" is not freed before reallocating.
+* Copy Assignments operators return type should be a reference so that cascading is possible. For example,
+x = y = z
+So declaration of your copy assignment operator should be CSample& operator = (const CSample& )
+* To decide when one should provide any of a Copy Constructor, a Copy Assignment Operator and a destructor take help of rule of 3 ( Now after C++11 rule of 5) 
+* GetX return type should be "int*"
+
+
+
+Constructors in C++
+
+A constructor is a member function of a class which initializes objects of a class. 
+In C++,Constructor is automatically called when object(instance of class) created .It is special member function of the class.
+Constructors don’t have return type
+If we do not specify a constructor, C++ compiler generates a default constructor for us (expects no parameters and has an empty body).
+
+Default Constructors: Default constructor is the constructor which doesn’t take any argument. It has no parameters.
+
+Parameterized Constructors: It is possible to pass arguments to constructors. Typically, these arguments help 
+initialize an object when it is created. To create a parameterized constructor,
+
+Constructor as private:
+constructor can be declared by private in below cases:
+1.Using friend class:  If we want that class should not be instantiated by anyone else but only by a friend class.
+2.Using singleton design pattern.
+
+can destructor be private?
+Destructor can be private ,when we want to control the object destruction :
+1.object destruction using a friend class.
+if the destructor is private, then the object can only be 
+deleted from inside the class as well. 
+
+
+Copy Constructor:
+A copy constructor is a member function which initializes an object using another object of the same class. 
+eg. MyClass (const MyClass &old_obj); 
+
+When is copy constructor called?
+-When an object of the class is passed (to a function) by value as an argument.
+eg.
+-When an object of the class is returned by value.
+-When an object is constructed based on another object of the same class.
+
+write code ?
+passed as ref to avoid non terminating chain of calls
+const to avoid any accidental modificstion.
+
+When to write user defined copy constructor?
+We need to define our own copy constructor only if an object has pointers else the pointers of the both objects would point to
+same memory location and could  cause undefined behavior.
+
+shallow copying:
+Default copy constructor and =operator function which is inserted by compiler in case they are missing from the class. 
+It performs a bit pattern copy i.e. simply copies data members of one object into another object.
+
+Deep copying:
+the data members copied will have a new memory address.
+Deep copy (pointers must not be copied. instead seperate memory allocation for them) must be introduced. 
+So above code can be updated by introducing copy constructor and = operator function.	
+	
+* Copy Constructor is called when you want to initialize an object from the state of another object of same type - Thus object under
+ "Copy Construction" is not already initialized.
+* Default Copy constructor performs member-wise copy, so if the member variable has his own copy constructor then it is called. 
+* During Copy Assignment, object already has a initialized state, so in implementation you should first destroy the current state 
+ and then copy the state of the object on RHS. More advanced topic would be exception safety.
+* In your implementation I see a potential memory leak as int buffer allocated to "x" is not freed before reallocating.
+* Copy Assignments operators return type should be a reference so that cascading is possible. For example,
+x = y = z
+So declaration of your copy assignment operator should be CSample& operator = (const CSample& )
+* To decide when one should provide any of a Copy Constructor, a Copy Assignment Operator and a destructor take help of rule of 3 ( Now after C++11 rule of 5) 
+* GetX return type should be "int*"
+
+
+
+
+Constructor initializer list:
+TO be used :
+1. nonstatic const
+2. references
+3. performance (less no of calls)

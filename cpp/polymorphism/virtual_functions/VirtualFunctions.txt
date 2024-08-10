@@ -1,0 +1,29 @@
+Virtual Function:
+(Runtime polymorphism)
+A virtual function is a member function which is declared within base class and is re-defined (Overriden) by derived class.
+When you refer to a derived class object using a pointer or a reference to the base class, you can call a virtual function 
+for that object and execute the derived class’s version of the function.
+Base *bp = new Derived;(base pointer pointed to derived)
+
+	-It is not mandatory for derived class to override (or re-define the virtual function),
+		in that case base class version of function is used.
+	-A class may have virtual destructor but it cannot have a virtual constructor.
+	-Virtual functions cannot be static and also cannot be a friend function of another class.
+	
+	
+	vtable:
+	
+	TO implement virtual functions, c++ uses special form of late binding called vtable.
+	The virtual table is a lookup table of functions used to resolve function calls in a dynamic/late binding.
+	
+	
+why constructor can't be virtual ?
+1.We cannot declare a virtual constructor. We should specify the exact type of the object at compile time.
+2.A virtual call is a mechanism to get work done given partial information. In particular, 
+"virtual" allows us to call a function knowing only an interfaces and not the exact type of the object. 
+To create an object you need complete information. In particular, you need to know the exact type of what 
+you want to create. Consequently, a "call to a constructor" cannot be virtual.
+
+why destructor can be virtual ?
+1.Virtual destructors are useful when you can delete an instance of a derived class through a pointer to base class.
+to avoid leaks if we leave the object undeleted

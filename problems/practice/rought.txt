@@ -1,0 +1,358 @@
+
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+class test{
+    
+    public:
+        test(){cout<<"test constr"<<endl; }
+        ~test(){cout<<"test destr"<<endl; }
+};
+
+int main()
+{
+    try{
+        test t[4];
+        throw 4;
+        cout<<"somerthing"<<endl;
+    }
+    
+    catch(...){
+        cerr<<"cought exce"<<endl;
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+/******************************************************************************
+
+                              Online C++ Debugger.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Debug" button to debug it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <exception>
+
+using namespace std;
+class myException: public exception{
+    
+    public:
+        const char *what() const throw()
+        {
+            cout<<"My exception happened"<<endl;    
+        }
+    
+}myEx;
+
+int main()
+{
+    try{
+        throw myEx;
+        cout<<"After exce throw"<<endl;
+    }
+    catch(myException &ex){
+        cout<<ex.what()<<endl;
+    }
+    cout<<"before return"<<endl;
+
+    return 0;
+}
+
+
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+int binary_search(int arr[], int l, int h, int key){
+	int mid;
+	while(l<=h){
+		mid = (l+h)/2;
+		if(key>arr[mid]){
+			l = mid + 1;
+		}
+		else if(key<arr[mid]){
+			h = mid - 1;
+		}
+		else {
+			return mid;
+		}
+	}
+	return -1;
+}
+
+int swap(int &x, int &y){
+	int temp = x;
+	x = y;
+	y = temp;
+}
+
+void bubbleSort(int arr[], int n){
+	for(int i=0; i<n-1; i++){
+		for(int j=0; j<n-i-1; j++){
+			if(arr[j]>arr[j+1]){
+				swap(arr[j], arr[j+1]);
+			}
+		}
+	}
+}
+
+void print(int arr[], int n ){
+	for(int i=0; i<n; i++){
+		cout<<arr[i]<<"\t";
+	}
+}
+
+int main(){
+	int list[] = {9,1,2,4,3,5,6,8};
+	int len = sizeof(list)/sizeof(int) ;
+	
+	print(list, len);
+	
+	bubbleSort(list, len);
+	
+	print(list, len);
+	
+	int num = 5;
+	
+	cout<<"binary search ele "<<num<<" Found at index = "<<binary_search(list, 0, len, 4)<<endl;
+	return 0;
+}
+
+
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+int decToBin(int n){
+	int bin=0,rem,i=1;
+	while(n!=0){
+		rem = n%2;
+		n = n/2;
+		bin = bin + rem*i;
+		i = i *10;
+	}
+	return bin;
+}
+
+int countSetBit(int n){
+	int count = 0, rem;
+	while(n!=0){
+		rem = n%10;
+		n = n/10;
+		if(rem == 1){
+			count ++;
+		}
+	}
+	return count;
+}
+
+int main(){
+	int num;
+	cin >> num;
+	int binVal = decToBin(num);
+	cout<<"no of set bits: "<<countSetBit(binVal);
+	return 0;
+}
+
+
+
+#include <iostream>
+#include <pthread.h>
+#include <unistd.h>
+using namespace std;
+
+int counter = 0;
+pthread_mutex_t myMutex;
+
+void *mutexTest(void *param){
+	for(int i=0; i<5; i++){
+		pthread_mutex_lock(&myMutex);
+		counter ++;
+		usleep(1);
+		cout<<"thread "<<(int)param<<" counter"<< counter<<endl;
+		pthread_mutex_unlock(&myMutex);
+	}
+}
+
+int main(){
+	cout<<"main starts"<<endl;
+
+	pthread_t my_thread1,my_thread2,my_thread3;
+	pthread_attr_t my_thread_attr;
+
+	int arg = 5;
+	int one = 1, two =2, three=3;
+	
+	pthread_mutex_init(&myMutex,0);
+	
+	pthread_create(&my_thread1, NULL, &mutexTest, (void *)one);
+	pthread_create(&my_thread2, NULL, &mutexTest, (void *)two);
+	pthread_create(&my_thread3, NULL, &mutexTest, (void *)three);
+	
+	pthread_join(my_thread1, 0);
+	pthread_join(my_thread2, 0);
+	pthread_join(my_thread3, 0);	
+	
+	pthread_mutex_destroy(&myMutex);
+	cout<<"main ends"<<endl;
+	
+	return 0; //	pthread_exit(NULL);
+}
+
+
+
+/******************************************************************************
+find the Longest consecutive ones in a binary sequence
+*******************************************************************************/
+
+#include <iostream>
+
+using namespace std;
+
+int maxLongestConsOne(int *arr, int n){
+    int max_count = 0, count =0;
+    int curr_num;
+    for(int i=0; i<n; i++){
+        curr_num = arr[i];
+        if(curr_num == 1){
+            count ++;
+        }
+        else{
+            if(count>max_count){
+                max_count = count;
+            }
+            count = 0;
+        }
+    }
+  return max_count;  
+}
+
+int main ()
+{
+    int arr[10] = {1,0,0,0,0,1,1,1,0,1};
+    int len = sizeof(arr)/sizeof(int);
+    
+    cout<<"maxLongestConsOne: "<<maxLongestConsOne(arr, len)<<endl;
+  return 0;
+}
+
+
+
+
+
+On device connection:
+
+1. 	onConnectionEvent (Device Delegator(DeviceMgr))  -> PhoneProjectionManagerPimpl::ConnectionStatusChangedEventHandler(DeviceId, conn_state)
+
+If connected(DEVICE_CONNECTED) : SetupProjection(projectionDevice)
+
+2.  SetupProjection(IProjectionDevice *projectionDevice)
+	technology = projectionDevice->ProjectionTechnology()
+	m_pPhoneProjectionPlugin = m_pPhoneProjectionFactory(eg. IPhoneProjectionFactory)->CreateProjectionController(deviceID, technology);
+	this->StartModeController(m_pPhoneProjectionPlugin->ProjectionTechnology());
+    m_pLayerInformation->GetFramebufferAddresses(technology);
+   m_pPhoneProjectionPlugin->Initialize((deviceurl_t)projectionDevice->GetProperty("device_path").c_str(), m_pLayerInformation->GetFramebufferAddresses(technology),
+                                 
+	
+3. PhoneProjectionProvider::CreateProjectionController(deviceid_t deviceID, projection_technology_t type)	
+
+     case PROJECTION_TECH_CARLIFE_ANDROID:
+     case PROJECTION_TECH_CARLIFE_IOS:
+		plugin = new CarLifeController(type);
+		
+		StartModeController(m_pPhoneProjectionPlugin->ProjectionTechnology());
+		
+		dynamic_cast<CarLifeModeController*>(m_pModeControllerFactory->GetModeController(projectionTechnology));
+							   IModeController* ModeControllerFactory::GetModeController(technology_t projectionTechnology)
+							   
+		typedef std::map<technology_t, IModeController*> modeController_list_t;
+		
+		typedef modeController_list_t::iterator modeController_list_iterator;
+		typedef modeController_list_t::const_iterator modeController_list_citerator;
+		
+4. CarLifeModeController::OnProjectionDeviceReady(ProjectionServicePlugin *plugin,
+                                                                    ScreenModeController *screenModeController,
+                                                                    AudioModeController *audioModeController,
+                                                                    DeviceActivityListener* deviceActivityListner)
+																	
+																	
+																	
+		       mAudioContextManager.RegisterAudioController(audioModeController);
+        mAudioContextManager.Begin();
+        mVideoContextManager.SetProjectionTechnology(PROJECTION_TECH_CARLIFE_ANDROID);
+        mVideoContextManager.RegisterVideoController(screenModeController);
+        mVideoContextManager.Begin();
+
+
+		mDeviceAudioUpdateHandlerId = m_pProjectionPlugin->ModeUpdateReceived.subscribe(&mAudioContextManager,&AudioContextManager::HandleDeviceResourceModeChanged);
+        mDeviceVideoUpdateHandlerId = m_pProjectionPlugin->ModeUpdateReceived.subscribe(&mVideoContextManager,&VideoContextManager::HandleDeviceResourceModeChanged);
+        m_BTPairing_Mode_handler_Id = m_pProjectionPlugin->BTPairingStatus.subscribe(&mVideoContextManager,&VideoContextManager::OnBTPairingRequested);
+        m_muteStateHandle = m_pProjectionPlugin->sgnSetSinkMuteState.subscribe(m_pAudioModeController, &AudioModeController::SetSinkMuteState);
+		
+		
+
+5. CarLifeController::Initialize(deviceurl_t url, FrameBufferAddresses frameBufferAddresses,
+                                                         IMainLoop *mainloop, IIPC *pbus, deviceid_t deviceid)
+		        InitializeBluetooth();
+        /*! Setup local params to be used for by cinemo */
+        SetupLocalParams();
+		
+		
+        /*! Initialize the video layer provider to paint the projection screen in
+         *  accordance with frame buffer address provided */
+        projError = InitializeVideoLayerProvider(frameBufferAddresses);  -> m_VideoLayerProvider.Initialize(frameBufferAddresses, SCREEN_WIDTH, SCREEN_HEIGHT);
+		
+		            m_CarLifeAdaptor.Initialize();  ->     MapApplicationModes(); (HOME,MAP,PHONE<MUSIC)
+
+					InitializeCinemoComponents();
+					
+					
+					
+					
+					
+					
+Handshake Carlife
+
+Mobile Device (USB Device)       HU(USB Host)
+1. COnnect device:
+   HU enumerates device list, check if MD is in AOA mode.
+   IF not send command to Req AOA mode switch.
+  
+2. Check AOA version 1.0 or 2.0
+3. Send authentication info to MD (Model, Manu, version, URL)
+4. MD will authenticate and check if it is bound to open this App
+	WIll popup dialog box with opening the App or download app from URL.
+5. Establish connection.
+
+
+
+
+
+
+
+std::map<devType_t, tech_t> m_psMapDevProjectionTypes; m_psMapDevProjectionTypes[DEVTYPE_CARPLAY] = PROJECTION_TECH_CARPLAY;
+	:: vector <deviceId_t> devList;
+	
+	m_psMapDevProjectionTypes.insert(pair<devType_t, tech_t>(DEVTYPE_CARLIFE_ANDROID, PROJECTION_TECH_CARLIFE_ANDROID)	);
+	

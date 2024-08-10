@@ -1,0 +1,152 @@
+
+Signal slot :
+A slot is a function that is called in response to a particular signal.
+
+
+The signature of a signal must match the signature of the receiving slot
+
+
+All classes that inherit from QObject or one of its subclasses (e.g., QWidget) can contain signals and slots:
+ used to enable meta-object features, such as dynamic properties, signals, and slots.
+
+
+All classes that contain signals or slots must mention Q_OBJECT at the top of their declaration
+
+
+
+What is QCast and how will it differ compared to c++’s dynamic cast?
+
+
+what is MOC
+
+The Meta-Object Compiler, moc, is the program that handles Qt's C++ extensions.
+The moc tool reads a C++ header file. If it finds one or more class declarations that contain the Q_OBJECT macro, 
+it produces a C++ source file containing the meta-object code for those classes. Among other things, meta-object 
+code is required for the signals and slots mechanism, the run-time type information, and the dynamic property system.
+
+what is qmake
+
+qmake is a tool that helps simplify the build process for development project across different platforms. 
+qmake automates the generation of Makefiles so that only a few lines of information are needed to create each Makefile.
+ qmake can be used for any software project, whether it is written in Qt or not.
+
+
+What is Qpointer
+
+7) What is a signal? And how will it differ from event?
+
+
+8) What is a slot? And how it differs with callback Method?
+
+
+
+11) How many slots can you connect to a signal? If more than one how those slots will be executed? 
+(The order of execution)
+
+13) What is the use of Q_OBJECT macro?
+
+
+14) What is MOC and UIC? Explain how they will work for compilation in QT?
+	
+	
+	15) What is qmake? (Explain the usage of it)
+
+QWidget
+The QWidget class is the base class of all user interface objects.
+The widget is the atom of the user interface: it receives mouse, keyboard and other events from the window system, 
+and paints a representation of itself on the screen. 
+
+QWidget *parent = 0 is the parent of the new widget. If it is 0 (the default), the new widget will be a window. 
+If not, it will be a child of parent, and be constrained by parent's geometry.
+
+Subclasses:
+QLabel, QPushButton, QListWidget, and QTabWidget.
+
+dgets respond to events that are typically caused by user actions. :
+ mousePressEvent().
+ paintEvent()  
+ mouseReleaseEvent() 
+ mousePressEvent()
+ mouseDoubleClickEvent()
+ keyPressEvent() 
+
+
+
+QThread
+The QThread class provides a platform-independent way to manage threads.
+
+A QThread object manages one thread of control within the program. QThreads begin executing in run(). 
+By default, run() starts the event loop by calling exec() and runs a Qt event loop inside the thread.
+
+You can use worker objects by moving them to the thread using QObject::moveToThread().
+
+it is safe to connect signals and slots across different threads, thanks to a mechanism called queued connections.
+
+
+
+QPointer can only point to QObject instances. It will be automatically set to nullptr if the pointed to object is destroyed.
+ It is a weak pointer specialized for QObject.
+
+QPointer is a template class that provides guarded pointers to Qt objects and behaves like a 
+normal C++ pointer except that it is automatically set to 0 when the referenced object is destroyed and no "dangling pointers" are produced
+
+
+signal slot:
+
+QObject::connect(mPhoneAppProxy,SIGNAL(sgnMsgSent(bool)),this,SLOT(sltSgnMsgSent(bool));
+
+enum Qt::ConnectionType
+
+:This enum describes the types of connection that can be used between signals and slots. In particular, 
+it determines whether a particular signal is delivered to a slot immediately or queued for delivery at a later time.
+
+
+Default) If the receiver lives in the thread that emits the signal, Qt::DirectConnection is used.
+ Otherwise, Qt::QueuedConnection is used. The connection type is determined when the signal is emitted.
+
+Qt::AutoConnection	0	
+Qt::DirectConnection	1
+Qt::QueuedConnection	2
+
+QThread Slots:
+
+void	quit()
+void	start(Priority priority = InheritPriority)
+void	terminate()
+
+QTHread signals:
+void	finished()
+void	started()
+
+Static Public Members:
+QThread *	create(Function &&f, Args &&... args)
+void	sleep(unsigned long secs)
+void	usleep(unsigned long usecs)
+
+Protected Functions:
+int	exec()
+virtual void	run()
+
+
+ Object will have no parent QWidget, because = 0 means the parent is a null pointer.
+
+ MyClass(QWidget *parent = 0)
+ The Myclass objest will not have parent Qwidget since *parent = 0 means ,parent pointer is NULL/
+
+ 
+ 
+ D-Bus is an Inter-Process Communication (IPC)
+ 
+ D-Bus defines two well-known buses, called the system bus and the session bus. These buses are special in the sense that the
+ y have well-defined semantics: some services are defined to be found in one or both of these buses.
+
+For example, an application wishing to query the list of hardware devices attached to the computer will probably communicate 
+to a service available on the system bus, while the service providing opening of the user's web browser will be probably
+ found on the session bus.
+
+On the system bus, one can also expect to find restrictions on what services each application is allowed to offer. Therefore,
+ one can be reasonably certain that, if a certain service is present, it is being offered by a trusted application.
+
+The service names are brokered by the D-Bus bus daemon and are used to route messages from one application to another. 
+An analogous concept to service names are IP addresses and hostnames: a computer normally has one IP address and may have one 
+or more hostnames associated with it,according to the services that it provides to the network.

@@ -1,0 +1,189 @@
+
+Class Relations:
+
+Association:
+Association is a simple structural connection or channel between classes and is a relationship where all objects have 
+their own lifecycle and there is no owner. 
+Eg.
+Students,dept and the courses
+Multiple students can associate with a single Department and single student can associate with multiple Departments,
+but there is no ownership between the objects and both have their own lifecycle. Both can create and delete independently.
+A student may not a have a course and the dept, so no ownership.
+
+Implementation details:
+Typically we use pointer variables that point to an object that lives outside the scope of the aggregate class
+Can use reference values that point to an object that lives outside the scope of the aggregate class
+Not responsible for creating/destroying subclasses
+
+Ex.
+Create a folder called "Links"
+Create a shortcut/link inside this folder and link it to www.go4expert.com
+Create another shortcut/link instide this folder and link it to www.google.com
+Ask your friend to do the same on another machine using same links (www.go4expert.com and www.google.com)
+Delete the "Links" folder, and open your browser to check if www.go4expert.com and www.google.com still exist or not ;)
+
+Aggregation:
+Aggregation is a specialize form of Association where all object have their own lifecycle but there is a ownership 
+like parent and child. Child object can not belong to another parent object at the same time. We can think of it as "has-a" relationship.
+Eg.
+Company-employee.
+A single Employee can not belong to multiple Companies , but if we delete the Company, Employee object will not destroy. 
+EMployee  object can still be there.
+Implementation details:
+Typically we use pointer variables that point to an object that lives outside the scope of the aggregate class
+Can use reference values that point to an object that lives outside the scope of the aggregate class
+Not responsible for creating/destroying subclasses
+
+Ex.
+Create a file called file.txt
+Make a simple Application to open the File.txt (rw mode), but don't program it close the connection.
+Run an instance of this application (it should work ok and can open the file for rw)
+Keep the first instance, and run another instance of this application (In theory it should complain that it can't open the
+ file in rw mode because it is already used by other application).
+Close the 2 instances (make sure you close the connection).
+From the above application, we understand that the Application and the File has a separate lifecycles, however this file can 
+be opened only by one application simuletanously (there is only one parent at the same time, however, this parent can move the
+child to another parent or can make it orphan).
+
+
+Composition :
+Composition is again specialize form ofAggregation. It is a strong type of Aggregation.
+ Here the Parent and Child objects have coincident lifetimes. Child object dose not have it's own lifecycle and
+ if parent object gets deleted, then all of it's child objects will also be deleted. 
+Eg. House and Rooms:
+House can contain multiple rooms there is no independent life for room and any room can not belong to two different house.
+ If we delete the house room will also be automatically deleted. 
+
+ Implentation details:
+
+1. Typically we use normal member variables
+2. Can use pointer values if the composition class automatically handles 
+allocation/deallocation
+3. Responsible for creation/destruction of subclasses 
+
+Ex.
+Open a new Document name it as test.txt
+Write this sentence inside this document "This is a composition".
+Save the document.
+Now, delete this document.
+
+This is what is called composition, you can't move the sentence "This is a omposition" from the document because its lifecycle
+ is linked to the parent (i.e. the document here !!)
+
+	
+Reference:https://www.go4expert.com/articles/association-aggregation-composition-t17264/	
+
+UML Diagrams:
+Structural:
+-Deployement diagram
+-Component Diagram
+-class Diagram
+-Object Diagram
+
+Behavoiural:
+-Sequence Diagram
+-UseCase Diagram
+-Statechart
+
+Rhapsody:
+UML Diagrams,packages and code gen config
+
+
+.vba file contains Macros
+
+
+-Properties of rhapsody project
+-Naming conventions
+
+File diagram:
+
+FIle interaction with each other/include structure  created/graphical representaiton of the file structure
+-files
+-Functions
+-variables
+-arguemens
+-dependencieds
+
+
+class Diagram:
+Class diagram consists of classes, interfaces, associations(relations), and collaboration. Class diagrams basically 
+represent the object-oriented view of a system, which is static in nature.
+
+
+Use case diagram:
+Has  actors,usecase and their associations(relations like aggreagation,etc)
+
+associations:
+
+1..*_____________________0..*
+Association is a relationship between classifiers which is used to show that instances of classifiers 
+could be either linked to each other or combined logically or physically into some aggregation.
+
+aggreagation:
+<>-----------
+it is binary association,
+if some or all of the composites are deleted, shared part may still exist.
+one or more composite objects which group together a set of instances. It is a "weak" form of 
+aggregation when part instance is independent of the composit
+
+composition:
+<|>-----------
+strong" form of aggregation:
+it is a whole/part relationship
+
+generalisation:
+<||----------
+dependency:Directed relationship-supplier client
+realization:
+<|-----
+Realization is a specialized abstraction relationship between two sets of model elements, one representing a specification (the supplier) and the 
+other represents an implementation of the latter (the client).
+
+
+Statecharts:
+*It defines state-based behaviour
+*IS_IN qery function provides and  returns a true value if the state is in the current active configuration.
+*InitStateChart() is called in constructor of class and  the state machine is initilised.
+
+
+Connectors:
+1.Transition Connector-
+response to the message in a state(idle,initial or any)
+A transition can have a trigger, guard, and actions.
+
+2.Conditional Connector-
+Condition connectors split a single segment into several branches on the basis of the guard condition.
+
+3.History Connector-
+History connectors store the most recent active configuration of a state and its substates. 
+Only one history connector is allowed in a state.
+When a transition is attached to a history connector and that transition is triggered, the state containing 
+the history connector recalls its last active configuration
+
+4.junction connector-
+A junction connector combines several segments into one outgoing segment, as shown in the following figure.
+The segments end up sharing the same transition line.
+
+5.Diagram Connector-
+it joins several segments in the same statechart.Diagram connectors enable you to jump to different parts of a diagram without
+ drawing spaghetti transitions. This functionality helps avoid cluttering the statechart. The jump is defined by matching 
+ names on the source and target diagram connectors.
+
+6.Termination Connector-
+The termination connector is the suicide or self-destruct connector.
+If a transition to a termination connector is taken, the instance deletes itself. A termination connector cannot have an outgoing transition.
+
+7.EnterExit points-
+EnterExit points are used to represent the entry to / exit from sub-statecharts.
+
+
+
+Statechart stuff:
+
+Submachines-
+Submachines manage the complexity of large statecharts by decomposition.
+The original statechart is called the parent, whereas the decomposed part is called the submachine.
+
+References:
+https://www.uml-diagrams.org
+https://www.ibm.com/support/knowledgecenter/SSB2MU_8.1.5/com.ibm.rhp.uml.diagrams.doc/topics/rhp_c_dm_connectors_stchrts.html

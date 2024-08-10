@@ -1,0 +1,2 @@
+﻿  UT_Demo.cpp
+LINK : fatal error LNK1104: cannot open file 'H:\Gtest\gtest-1.7.0\GtestStaticLib\Debug\UT_Demo.exe'

@@ -1,0 +1,59 @@
+
+ Friend class:
+ Friend Class A friend class can access private and protected members of other class in which it is declared as friend. 
+ It is sometimes useful to allow a particular class to access private members of other class. 
+ For example a LinkedList class may be allowed to access private members of Node.
+
+1) Friends should be used only for limited purpose. too many functions or external classes are declared as friends of 
+a class with protected or private data, it lessens the value of encapsulation of separate classes in object-oriented programming.
+2) Friendship is not mutual. If a class A is friend of B, then B doesn’t become friend of A automatically.
+3) Friendship is not inherited.
+4) The concept of friends is not there in Java.
+
+friend function :-
+The function is declared friend in class whose private members to be accessed.
+Friend properties same as friend class.
+
+
+ class Node
+{
+private:
+  int key;
+  Node *next;
+ 
+  /* Other members of Node Class */
+  friend int LinkedList::search(); // Only search() of linkedList 
+                                  // can access internal members
+};
+ 
+
+ 
+ // Example program
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class test{
+private:
+    test(){cout<<"test const called"<<endl;}
+    ~test(){cout<<"test dest called"<<endl;}
+    friend class table;
+};
+
+class table{
+public:
+    table(){
+        test t;
+        cout<<"table const called"<<endl;}
+    ~table(){cout<<"table dest called"<<endl;}
+    
+};
+
+int main()
+{
+  table t;
+  //t.~test();
+}
+
+ 

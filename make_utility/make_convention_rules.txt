@@ -1,0 +1,180 @@
+#to avoid trouble on systems where the SHELL variable might be inherited from the environment.
+SHELL = /bin/sh
+
+
+The configure script and the Makefile rules for building and installation should not use any utilities directly except these:
+
+awk cat cmp cp diff echo egrep expr false grep install-info ln ls
+mkdir mv printf pwd rm rmdir sed sleep sort tar test touch tr true
+
+
+It is a good idea to avoid creating symbolic links in makefiles, since a few file systems don’t support them.
+
+
+
+The Makefile rules for building and installation can also use compilers and related programs, but should do so via make variables so that the user can substitute alternatives. Here are some of the programs we mean:
+
+ar bison cc flex install ld ldconfig lex
+make makeinfo ranlib texi2dvi yacc
+Use the following make variables to run those programs:
+
+$(AR) $(BISON) $(CC) $(FLEX) $(INSTALL) $(LD) $(LDCONFIG) $(LEX)
+$(MAKE) $(MAKEINFO) $(RANLIB) $(TEXI2DVI) $(YACC)
+
+
+Additional utilities that can be used via Make variables are:
+
+chgrp chmod chown mknod
+
+
+
+In particular, you should run most utility programs via variables. Thus, if you use Bison, have a variable named BISON whose 
+default value is set with ‘BISON = bison’, and refer to it with $(BISON) whenever you need to use Bison.
+
+File management utilities such as ln, rm, mv, and so on, need not be referred to through variables in this way, 
+since users don’t need to replace them with other programs.
+
+Each program-name variable should come with an options variable that is used to supply options to the program. 
+Append ‘FLAGS’ to the program-name variable name to get the options variable name—for example, BISONFLAGS. 
+(The names CFLAGS for the C compiler, YFLAGS for yacc, and LFLAGS for lex, are exceptions to this rule, 
+but we keep them because they are standard.) 
+Use CPPFLAGS in any compilation command that runs the preprocessor, 
+and use LDFLAGS in any compilation command that does linking as well as in any direct use of ld.
+
+If there are C compiler options that must be used for proper compilation of certain files, 
+do not include them in CFLAGS. 
+Users expect to be able to specify CFLAGS freely themselves. 
+Instead, arrange to pass the necessary options to the C compiler independently of CFLAGS, 
+by writing them explicitly in the compilation commands or by defining an implicit rule, like this:
+
+CFLAGS = -g
+ALL_CFLAGS = -I. $(CFLAGS)
+.c.o:
+        $(CC) -c $(CPPFLAGS) $(ALL_CFLAGS) $<
+        
+Do include the ‘-g’ option in CFLAGS, because that is not required for proper compilation. 
+You can consider it a default that is only recommended. If the package is set up so that it is compiled with GCC by default,
+then you might as well include ‘-O’ in the default value of CFLAGS as well.
+
+Put CFLAGS last in the compilation command, after other variables containing compiler options, so the user can use CFLAGS
+ to override the others.
+
+CFLAGS should be used in every invocation of the C compiler, both those which do compilation and those which do linking.
+
+Every Makefile should define the variable INSTALL, which is the basic command for installing a file into the system.
+
+Every Makefile should also define the variables INSTALL_PROGRAM and INSTALL_DATA. 
+(The default for INSTALL_PROGRAM should be $(INSTALL); the default for INSTALL_DATA should be ${INSTALL} -m 644.) 
+Then it should use those variables as the commands for actual installation, for executables and non-executables respectively. 
+Minimal use of these variables is as follows:
+
+$(INSTALL_PROGRAM) foo $(bindir)/foo
+$(INSTALL_DATA) libfoo.a $(libdir)/libfoo.a
+
+
+DESTDIR: Support for Staged Installs
+DESTDIR is a variable prepended to each installed target file, like this:
+
+$(INSTALL_PROGRAM) foo $(DESTDIR)$(bindir)/foo
+$(INSTALL_DATA) libfoo.a $(DESTDIR)$(libdir)/libfoo.a
+The DESTDIR variable is specified by the user on the make command line as an absolute file name. For example:
+
+make DESTDIR=/tmp/stage install
+
+If your installation step would normally install /usr/local/bin/foo and /usr/local/lib/libfoo.a, then an installation invoked
+ as in the example above would install /tmp/stage/usr/local/bin/foo and /tmp/stage/usr/local/lib/libfoo.a instead.
+
+Prepending the variable DESTDIR to each target in this way provides for staged installs, where the installed files are not 
+placed directly into their expected location but are instead copied into a temporary location (DESTDIR). However, 
+installed files maintain their relative directory structure and any embedded file names will not be modified.
+
+You should not set the value of DESTDIR in your Makefile at all
+
+
+Variables for Installation Directories:
+
+Installation directories should always be named by variables, so it is easy to install in a nonstandard place
+
+Installers are expected to override these values when calling make (e.g., make prefix=/usr install) or 
+configure (e.g., configure --prefix=/usr).
+
+
+Standard Targets for Users:
+
+All GNU programs should have the following targets in their Makefiles:
+
+‘all’
+
+Compile the entire program. 
+This should be the default target. This target need not rebuild any documentation files; 
+Info files should normally be included in the distribution, and DVI (and other documentation format) files should be made
+only when explicitly asked for.
+
+
+By default, the Make rules should compile and link with ‘-g’, so that executable programs have debugging symbols. Otherwise, you are essentially helpless in the face of a crash, 
+and it is often far from easy to reproduce with a fresh build.
+
+
+‘install’
+Compile the program and copy the executables, libraries, and so on to the file names where they should reside for actual use.
+If there is a simple test to verify that a program is properly installed, this target should run that test.
+
+‘clean’
+Delete all files in the current directory that are normally created by building the program. 
+Also delete files in other directories if they are created by this makefile. 
+However, don’t delete the files that record the configuration. Also preserve files that could be made by building,
+ but normally aren’t because the distribution comes with them. There is no need to delete parent directories that 
+ were created with ‘mkdir -p’, since they could have existed anyway.
+
+‘distclean’
+Delete all files in the current directory (or created by this makefile) that are created by configuring or building the program. 
+If you have unpacked the source and built the program without creating any other files, ‘make distclean’ should leave only 
+the files that were in the distribution. However, there is no need to delete parent directories that were created with
+ ‘mkdir -p’, since they could have existed anyway.
+
+‘TAGS’
+Update a tags table for this program.
+
+‘info’
+Generate any Info files needed. The best way to write the rules is as follows:
+
+Generate any Info files needed. The best way to write the rules is as follows:
+
+info: foo.info
+
+foo.info: foo.texi chap1.texi chap2.texi
+        $(MAKEINFO) $(srcdir)/foo.texi
+You must define the variable MAKEINFO in the Makefile. It should run the makeinfo program, which is part of the 
+Texinfo distribution.
+
+
+Here are the three possible category lines, each with a comment that explains what it means:
+
+        $(PRE_INSTALL)     # Pre-install commands follow.
+        $(POST_INSTALL)    # Post-install commands follow.
+        $(NORMAL_INSTALL)  # Normal commands follow.
+        
+        
+ Pre-installation and post-installation commands should not run any programs except for these:
+
+[ basename bash cat chgrp chmod chown cmp cp dd diff echo
+egrep expand expr false fgrep find getopt grep gunzip gzip
+hostname install install-info kill ldconfig ln ls md5sum
+mkdir mkfifo mknod mv printenv pwd rm rmdir sed sort tee
+test touch true uname xargs yes
+
+
+
+
+3.1 Which Languages to Use
+When you want to use a language that gets compiled and runs at high speed, the best language to use is C. C++ is ok too, 
+but please don’t make heavy use of templates. So is Java, if you compile it.       
+
+When highest efficiency is not required, other languages commonly used in the free software community, 
+such as Lisp, Scheme, Python, Ruby, and Java, are OK too.
+ Scheme, as implemented by GNU Guile, plays a particular role in the GNU System: it is the preferred language 
+ to extend programs written in C/C++, and also a fine language for a wide range of applications. 
+ The more GNU components use Guile and Scheme, the more users are able to extend and combine them 
+ (see The Emacs Thesis in GNU Guile Reference Manual).
+
+Many programs are designed to be extensible: they include an interpreter for a language that is higher level than C. Often much of the program is written in that language, too. The Emacs editor pioneered this technique.

@@ -1,0 +1,20 @@
+Encapsulation:
+Encapsulation is a process of wrapping of  data members and functions 
+in a single unit called class. This is to prevent the access to the data directly, the access to them is 
+provided through the functions of the class.
+eg.
+1) Make all the data members private.
+2) Create public setter and getter functions for each data member in such a way that the set function 
+	set the value of data member and get function get the value of data member.
+
+
+Implementation Difference Between Encapsulation and Abstraction
+
+1.  Abstraction is implemented using interface and abstract class while Encapsulation is implemented using private and 
+protected access modifier.
+
+2. OOPS makes use of encapsulation to enforce the integrity of a type (i.e. to make sure data is used in an 
+appropriate manner) by preventing programmers from accessing data 
+in a non-intended manner. Through encapsulation, only a predetermined group of functions can access the data.
+ The collective term for datatypes and operations (methods) bundled together with access restrictions (public/private, etc.) 
+ is a class.

@@ -1,0 +1,23 @@
+Set :
+associative container  which has all the unique values:
+
+Multiset:
+Container wh
+
+A vector is a resizable array. It's elements are stored next to each other in a contiguous block of memory, 
+so that the position of each can be calculated quickly; this is known as random access.
+Inserting and removing elements from the middle requires moving all the later elements, so can be rather slow.
+
+
+A list is a linked list. The elements are scattered around memory, and each has pointers to the next and previous element. 
+You can only find an element by following the chain of pointers, which might be rather slow; this is known as sequential access. 
+But elements can be inserted and removed just by modifying a few pointers, so that can be quite fast.
+
+
+Here are some STL containers and what they are efficient at:
+
+vector: dynamic array -- efficient at random access, and add/delete at end.
+list : doubly-linked list -- efficient at forward/backward traversal, and insertion anywhere.
+forward_list : singly-linked list -- efficient at forward traversal, and insertion anywhere.
+deque : doubled ended queue -- dynamic array that also allows for efficient add/delete at beginning
+array : static array -- size fixed at compile time.

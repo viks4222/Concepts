@@ -1,0 +1,74 @@
+RDBMS stands for Relational Database Management System. RDBMS is the basis for SQL, and for all modern database systems 
+like MS SQL Server, IBM DB2, Oracle, MySQL, and Microsoft Access.
+
+
+The data in an RDBMS is stored in database objects which are called as tables. This table is basically a collection of 
+related data entries and it consists of numerous columns and rows.
+
+
+A record is also called as a row of data is each individual entry that exists in a table
+
+A column is a vertical entity in a table that contains all information associated with a specific field in a table.
+
+MySQL
+MySQL is an open source SQL database
+
+MySQL syntax:
+
+SQL SELECT Statement:
+SELECT column1, column2....columnN
+FROM   table_name;
+
+SQL DISTINCT Clause:
+SELECT DISTINCT column1, column2....columnN
+FROM   table_name;
+
+
+SQL WHERE Clause:
+SELECT column1, column2....columnN
+FROM   table_name
+WHERE  CONDITION;
+
+
+SQL CREATE TABLE Statement
+
+CREATE TABLE table_name(
+column1 datatype,
+column2 datatype,
+column3 datatype,
+.....
+columnN datatype,
+PRIMARY KEY( one or more columns )
+);
+
+
+SQL DROP TABLE Statement
+DROP TABLE table_name;
+
+
+SQL ALTER TABLE Statement
+ALTER TABLE table_name {ADD|DROP|MODIFY} column_name {data_ype};
+SQL ALTER TABLE Statement (Rename)
+ALTER TABLE table_name RENAME TO new_table_name;
+
+
+SQL INSERT INTO Statement
+INSERT INTO table_name( column1, column2....columnN)
+VALUES ( value1, value2....valueN);
+SQL UPDATE Statement
+UPDATE table_name
+SET column1 = value1, column2 = value2....columnN=valueN
+[ WHERE  CONDITION ];
+SQL DELETE Statement
+DELETE FROM table_name
+WHERE  {CONDITION};
+SQL CREATE DATABASE Statement
+CREATE DATABASE database_name;
+SQL DROP DATABASE Statement
+DROP DATABASE database_name;
+SQL USE Statement
+USE database_name;
+SQL COMMIT Statement
+COMMIT;
+SQL ROLLBACK Statement
+ROLLBACK;

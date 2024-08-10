@@ -1,0 +1,64 @@
+Templates in C++
+
+Pass data as parameters so that we do not have to write same code for diff data types.
+keywords:template,typename(replacable with classes).
+
+Templates are expanded at compiler time. This is like macros. The difference is, compiler does type checking before template expansion.
+source code contains only function/class, but compiled code may contain multiple copies of same function/class.
+
+Template <Typename T>
+T max(T x, T y){
+	return (x>y)? x:y ;
+	
+}
+
+
+So lets discuss first when an copy constructor gets called. Consider following expressions,
+//Code snippet 1 - Call by value 
+//Function declarations
+void fun1(Object o); //accepts object by value
+void fun2(Object& o); //accepts object by reference
+...
+Object obj;
+fun1(obj); //Copy CTOR will get called - Here formal parameter "o" in function gets initialized from the state of the "obj", thus o becomes a copy of obj
+fun2(obj); //Copy CTOR is not called as obj is passed as reference
+
+//Code snippet 2 - Copy construction
+Object o1, o2(o1); //Here o2 is initialized from the state of o1 - o2 is copy
+
+//Code snippet 3 - Initialization from factory
+Object factory();
+...
+Object obj = factory(); //Here, again copy CTOR of the Object is called to initialize the obj, result of the factory() is a temporary object from which our obj is built.
+
+This in all cases above our object is constructed by copying the contents of some another object.
+
+Now, lets discuss about copy assignment. Consider expression below,
+Object o1; //Default CTOR of o1 is called to initialize the object
+o1 = factory(); //Now, here "Copy Assignment" operator is called. ( Lets consider C++98 here, C++11 onwards "move assignment" takes place, but lets keep is simple).
+
+But, o1 here is already initialized, right ? It might be holding handles to very precious resources such as memory, sockets, files. So when I am assigning it with some other object, I should first release the resources.
+Thus, while implementing copy assignment operator, we should first destroy the current state and reinitialize it from the state of the object passed as argument.
+
+Thus, in the example in note above possible implementation could be,
+CSample& operator=(const CSample &ob)
+{
+//First delete current state, someone even write like this->~CSample();
+delete [] this->x; //1
+this->N = 0; //2 
+//Now re-initialize
+this->N = ob.N; //3
+this->x = new int[this->N]; // 4
+}
+
+Now, lets go deep, statement 4 could possibly fail if there is no memory to allocate for x, and we will be left with our CSample in some undefined state. We can not go back and have our old state since in statement 1 & 2 we have destroyed it. Consider the alternate implementation here,
+
+CSample& operator=(const CSample &ob)
+{
+CSample tmp(ob); //1
+std::swap( tmp.N , this->N); //2
+std::swap(tmp.x, this->x); //3
+return *this;
+}
+
+In this implementation, I am creating a temporary CSample object (copy constructed). Then I am swapping contents of tmp with this. (Statements 2&3, its a good practice if you can create your own swap method in CSample class)

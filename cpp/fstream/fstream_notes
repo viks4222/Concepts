@@ -1,0 +1,28 @@
+
+-To open files for reading and writing fstream must be included
+-ifstream object created for opening to read a file
+-ofstream object created for opening to write a file
+
+getline - library function to read one line
+
+
+#include <string>
+#include <fstream>
+#include <iostream>
+
+using namespace std;
+
+int main(){
+	ofstream out("testWrite.txt");
+	ifstream in("testRead.txt");
+
+	string s, line;
+	getline(in,s);
+	cout<<"printed first line: "<<s<<endl;
+
+	while(getline(in, line)){
+		s = s + line + "\n";
+		cout<<"S:"<<s;
+	}
+	return 0;
+}

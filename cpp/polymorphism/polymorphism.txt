@@ -1,0 +1,53 @@
+http://www.programmerinterview.com/index.php/c-cplusplus/pure-virtual-function/
+
+
+polymorphism:
+The word polymorphism means having many forms. In simple words, we can define polymorphism as the ability of a message
+ to be displayed in more than one form.
+In C++ polymorphism is mainly divided into two types:
+
+1.Compile time Polymorphism
+Compile time polymorphism: This type of polymorphism is achieved by function overloading or operator overloading.
+Function Overloading: When there are multiple functions with same name but different parameters then these functions 
+are said to be overloaded. Functions can be overloaded by change in number of arguments or/and change in type of arguments.
+Operator Overloading: C++ also provide option to overload operators. For example, we can make the operator (‘+’) for string class 
+to concatenate two strings. We know that this is the addition operator whose task is to add to operands.
+ So a single operator ‘+’ when placed between integer operands , adds them and when placed between string
+ operands, concatenates them.
+
+2.Runtime Polymorphism:
+Function overriding on the other hand occurs when a derived class has a definition for one of the member functions of the base class.
+ That base function is said to be overridden.
+ virtual functions are called according to the type of object pointed or referred
+ 
+ 
+ Virtual Functions:
+ 
+ What is the use?
+Virtual functions allow us to create a list of base class pointers and call methods of any of the derived classes without even knowing 
+kind of derived class object
+
+vtable: A table of function pointers. It is maintained per class.
+vptr: A pointer to vtable. It is maintained per object (See this for an example).
+
+Compiler adds additional code at two places to maintain and use vptr.
+1) Code in every constructor. This code sets vptr of the object being created. This code sets vptr to point to vtable of the class.
+2) Code with polymorphic function call (e.g. bp->show() in above code). Wherever a polymorphic call is made, compiler inserts code to 
+first look for vptr using base class pointer or reference (In the above example, since pointed or referred object is of derived type,
+ vptr of derived class is accessed). Once vptr is fetched, vtable of derived class can be accessed. Using vtable, address of 
+ derived derived class function show() is accessed and called.
+
+
+
+Virtual Functions:
+A virtual function declared in a class shall be defined, or declared pure in that class, or both
+So either you should make the function pure virtual or provide a definition for it.
+Note that a destructor must be defined even if it is declared pure-virtual 
+1.A class with atleast one method as pure virtual is called abstract class
+2.If all the moethods in a class are pure virtual it is an interface class and it should have an 
+implementor class where function definations are provided.
+3.An abstract class can have constructors.
+4.If we do not override the pure virtual function in derived class, then derived class also becomes abstract class
+5 We can have pointers and references of abstract class type.
+
+

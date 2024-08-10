@@ -1,0 +1,76 @@
+//Problem:Find the probability of 2 dices to have sum less than or equal to 9.
+
+
+#include<iostream>
+
+using namespace std;
+
+//Function to find the greatest common divisor
+int gcd(int j,int k){
+    int gcdValue =1;
+    for(int i=1; i<=j && i<=k; i++){
+        if(i%j==0 && i%k==0){
+            gcdValue = i;
+            break;
+        }
+    }
+    return gcdValue;
+}
+
+//Driving programm
+int main()
+{
+
+//Counter to store the number of of times dices sum is less than or equal to 9
+int cntr=0;
+
+//sum of dices
+int sum=0;
+
+//Total count of dices combinatioons
+int total=0;
+
+//Dices values
+int arr[6]={1,2,3,4,5,6};
+
+
+//Code to find the cntr & total
+for (int a=0;a<6; a++)
+    {
+        for(int b=0;b<6; b++)
+        {
+            sum = arr[a]+arr[b];
+            if (sum <=9)
+            {
+                cntr+=1;
+                cout <<"counter:"<<cntr<<endl; 
+
+            }
+            cout <<"SUM:"<<sum<<endl; 
+            if(sum>=0)
+            {
+                total+=1;
+            }
+
+        }
+         
+    }
+    
+    //Print the cntr and the total counts
+        cout <<"cntr:"<<cntr<<endl; 
+        cout <<"Totl:"<<total<<endl; 
+        
+        //Find the GCD for cntr and total
+        int maxmult=gcd(cntr,total);
+        float total1=(float)total;
+        float cntr1=(float)cntr;
+        
+        //Probability in decimal
+        float prob= total1/cntr1;
+        cout <<prob*maxmult<<endl;
+
+        //Probability 
+        cout <<cntr<<"/"<<total<<endl;
+}
+
+

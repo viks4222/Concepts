@@ -1,0 +1,50 @@
+//Problem:Find the probability of 2 dices to have sum less than or equal to 9.
+
+#include<iostream>
+
+using namespace std;
+
+class test
+{
+    private:
+        int a;
+        int b;
+    public:
+        test(){
+        }
+        test(int x, int y){
+             a =  x;
+             b =  y;
+        }
+        test(const test &obj2){
+            cout << "copy constr. called"<<endl;
+            a = obj2.a;
+            b = obj2.b;
+        }
+        int X(){return a;}
+        int Y(){return b;}
+        
+        struct mystruct{
+            int viks =1 ;
+            char pradc;
+            }mystruct1;
+            
+};
+
+int main()
+{
+    test obj1(10,15);
+    test obj2 = obj1;
+    int j = obj2.X();
+    int k = obj2.Y();
+    cout <<"dsjvdskvjn"<<j <<k<<endl;;;
+    test *ptr ;//class pointer
+    ptr = &obj1; //save address of obj1 to access it using classs ptr
+    int l= ptr->X(); //access class methd
+    cout << "l:"<<l<<endl;;
+    //est.mystruct structOne;
+    test obj;
+    int z = obj.mystruct1.viks;
+    cout <<"Z:"<<z<<endl;
+}
+
