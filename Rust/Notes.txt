@@ -1,0 +1,25 @@
+Rust 
+- statically typed
+- type inference
+- ensures no undefined memory behaviour
+- immutability by default e.g. let x = 10 makes it immutable unless mut defined explicitly, unlike C or C++
+- mutable Borrowing - let mut y = &x;  (read/write purpose)
+- immutabe Borrowing - let y = &x; (read only)
+- Borrowing - referrant & Borrower
+- Compiler catches all run time error at compile time.
+- Rust automatically deallcoates heap memory if variable goes out of scope
+- No Garbage collector, uses drop method
+- Single owner design
+- The transfer of ownership happens by default in rust unlike C++ where we call std::move explicitely to transfer t
+- return value based error handling
+- Cargo package manager for rust similar to what pip (python), Node package manager(java script)
+- Macro are differentiated by adding "!" at the end of call e.g. print!, println!
+- rustfmt, clippy,cargo fix, etc, for static analysis for rust
+- primitive datatype - i8, i16...i64, u8, u16..isize, usize;
+= floating = f32, f64
+- boolean - bool
+- char - char
+- Arrays: [T;N] -> T is type of element and N is no. of elements
+- Slices &[T]
+- Tuple - a fixed length collection of elements, where each element can have different data type
+

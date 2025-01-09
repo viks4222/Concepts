@@ -1,0 +1,449 @@
+int8_t, uint8_t, int16_t, uint16_t etc are present in stdint.h header
+These are used for fixed size integer otherwise int will be used which can differ in size on different OS or hardware
+
+
+Volatile :
+Volatile keyword is intended to prevent the compiler from applying any optimizations on objects that can change in ways that cannot be determined by the compiler.
+Objects declared as volatile are omitted from optimization because their values can be changed by code outside the scope of current code at any time.
+
+Global variables modified by an interrupt service routine outside the scope: For example, a global variable can represent a 
+data port (usually a global pointer, referred to as memory mapped IO) which will be updated dynamically. The code reading the 
+data port must be declared as volatile in order to fetch the latest data available at the port. Failing to declare the 
+variable as volatile will result in the compiler optimizing the code in such a way that it will read the port only once and 
+keep using the same value in a temporary register to speed up the program (speed optimization). In general, an ISR is used 
+to update these data ports when there is an interrupt due to the availability of new data. 
+
+Global variables within a multi-threaded application: There are multiple ways for threads’ communication, viz., message passing, 
+shared memory, mail boxes, etc. A global variable is weak form of shared memory. When two threads are sharing information via global variables, 
+those variables need to be qualified with volatile. Since threads run asynchronously, any update of global variables due to one thread 
+should be fetched freshly by the other consumer thread. The compiler can read the global variables and place them in temporary 
+variables of the current thread context. To nullify the effect of compiler optimizations, such global variables need to be qualified as volatile.
+
+Linker placement directive:
+https://www.cnblogs.com/shangdawei/p/3527557.html
+
+https://learn.microsoft.com/en-us/cpp/preprocessor/pragma-directives-and-the-pragma-keyword?view=msvc-170
+
+preemptive  scheduling
+ - Preemptive scheduling is used when process switches from running to ready state or from waiting state to ready state 	
+- Round Robin
+- Shortest remaining time first
+
+
+_ICCARM_ 
+ARM has differnt compilers & above macro is used for identifying the compiler being used to build this code
+
+
+pragma:
+pragma are compiler directives that are they provide additional info to the compiler
+
+static:
+to scope the variable or function to the module where its defined
+
+extern:
+extend the visibility of a function or variable outside the file
+the variables can be modified outside the file.
+
+Semaphore:
+
+
+Callbacks:
+A callback function is any function that receives the reference of another function as the argument 
+to call the function. We can call a callback function using the function pointers in the C programming language.
+
+typedef:
+redefine an existing data type to give meaningful name
+ - typedef unsigned int MyInt;
+struct using typedef is convenient to use 
+typedef in function, structure, enum etc.
+
+
+whats the difference between C strings and C++ strings?
+
+In C, strings are just character arrays and its user responsibility to allocate memory for the extra byte ending null in it(In case of dynamic memory allocation).
+char *s1 = strdup("Hello");
+char s2 = (char)malloc(strlen(s1) + 6);
+strcpy(s2,s1);
+strcat(s2,", Pax");
+free(s1);
+
+
+If you don/t append a string with null character you won't be able to perform library functions on it
+if it doesn't end with a null byte it is not technically a 'string', it is simply a char array
+ou won't be able to use many of the string functions strcat, strcmp, strcpy, strlen, printf,
+
+
+
+In C++, strings (std::string) are objects with all the associated automated memory management and control 
+which makes them a lot safer and easier to use, especially for the novice. For dynamic allocation, use something like:
+string s = "Hello";
+s += ", Pax";
+
+You can (if you need one) always construct a C string out of a std::string by using the c_str() method.
+ 
+
+- Analysing memory map files
+- Moving out the code related to bitmap & font to the external flash using linker 
+  place in OspiFlash
+  {
+    section FlashExternal*,
+    ro section RAMExternal_Data_init
+  };
+
+Unicode
+Unicode is a set of non-English characters which can be characters from a different language like Arabic, Hebrew,
+ etc, or can be special characters like emojis and smiley faces. Character encoding went for a toss 
+ when different people from different regions of the world started encoding in their local languages. 
+ Because of that, the whole process of communication by the means of computers got affected. 
+ So, to handle this problem, the Unicode consortium came into the picture which was a group 
+ of different people from different regions and different companies whose main task was to 
+ encode all the characters that exist in the world in such a way that there remain no disputes.
+ Unicode started with a fixed two-byte character set but later on, it was changed. 
+ Unicode consists of more than a hundred thousand characters and over a hundred languages to
+ handle the vast multitude of different languages including complex characters like emojis, modifiers, and other unknown characters.
+
+If we try to print a special character like an emoji in C language, the compiler will not give the result of 
+printing that emoji. Rather, it returns a code for that emoji which will not be helpful for the user. 
+To resolve this matter, we will practice the Unicode process in C.
+
+
+C, C++ Headers:
+<cstdlib> (stdlib.h)
+ - This header defines several general purpose functions, including dynamic memory management, 
+   random number generation, communication with the environment, integer arithmetics, searching, sorting and converting.
+   
+<cstdio> (stdio.h)
+ - Input and Output operations can also be performed in C++ using the C Standard Input and Output Library (
+   cstdio, known as stdio.h in the C language). This library uses what are called streams to operate with physical devices 
+   such as keyboards, printers, terminals or with any other type of files supported by the system. Streams are an abstraction
+   to interact with these in an uniform way; All streams have similar properties independently of the individual 
+   characteristics of the physical media they are associated with.
+   Streams are handled in the cstdio library as pointers to FILE objects. A pointer to a FILE object uniquely 
+   identifies a stream, and is used as a parameter in the operations involving that stream.
+
+<cstring> (string.h)
+ - This header file defines several functions to manipulate C strings and arrays.
+
+There also exist three standard streams: stdin, stdout and stderr, which are automatically created and opened for all programs using the library.   
+<clocale> (locale.h)
+
+ - The C language supports localization specific settings, such as culture-specific date formats or 
+   country-specific currency symbols.
+   
+<cwchar> (wchar.h)
+ - This header file defines several functions to work with C wide strings.
+ 
+<cmath> (math.h)
+ - Header <cmath> declares a set of functions to compute common mathematical operations and transformations:
+
+
+
+
+is there a difference between structure & class
+ - all members are default public in structure
+ - keyword, class vs struct
+ - access specifier is possible in structure too
+struct Details
+{
+  int id;
+  char name[10];
+};
+
+typedef struct
+{
+  int id;
+  char name[10];
+}Details;
+
+
+System Clocks:
+
+In a Microcontroller, the CLOCK determines the pace at which Instructions are fetched, interpreted and then executed.
+Microcontrollers have multiple clock sources nowadays, including often at least 4
+
+Their main CPU clock (ie 4, 10, 20, 80 MHz, …)
+The low power RTC real time clock at 32768 Hz
+Internal RC backup clock
+Internal watchdog clock
+The clock provides instruction pipeline rythms but the clock sources and how they operate or can be tune is very specific to each micro.
+
+Often the clock source can be changed at runtime and often there is an init to setup various internal system’s clock sources, like the Timers can be changed to use various clock and pre-scalers, etc …
+
+I don’t recommend trying to understand just the clock systems over the microcontroller subject, but rather take a comprehensive book or datasheet and get through it, that’s much more helpful.
+
+For the ones i know, i recommend a simple PIC microcontroller such PIC 16F84 or 16F628 and read the datasheet. They are very well done and can get a good grasp of internal architecture.
+
+
+Can I make a memory (excluding registers) without a clock for my small microcontroller?
+You can use SRAM with out a clock. Even initial days DRAMs did not require clock. 
+Only later days to improve the performance the clock was included in DRAM and called as 
+Synchronous DRAM or SDRAM. Later the engineers to double the performance, accessed the data 
+from memory using both the edges (rising and falling) of the clock and called as DDR SDRAM 
+(Double Data Rate Synchronous Dynamic Random Access Memory). Then DDR2, DDR3 and DDR4 came to market.
+
+
+Why do most microcontrollers use 32768 (2^15) Hz crystals as a real time clock source instead of other frequencies like 16MHz or 20kHz?
+Because when digital electronics were young, it was cheap, easy and low power to get binary counter chains. A 15 stage ripple counter (the simplest and cheapest kind) would yield 1.0000 Hz output with a 32768 Hz input. which could then be used to drive modulo 60 seconds counters, modulo 60 minutes counters and modulo 12 or 24 counters for a digital display, or drive a small motor and escapement for a geared analog clock which needs 1 second pulses.
+
+Fortunately 32768 Hz crystals are easy and cheap and stable. High frequency clocks impose a power consumption that is proportional to frequency so a watch or real time battery backed up circuit would use 600 times more power with a 20 MHz crystal and the battery would have to be 600 times bigger to get equivalent lifespan.
+
+Since the real time click is kept running even when the computer is off or sleeping, low power is useful.
+
+
+
+
+UART
+universal asynchronous 
+receive-transmit
+no shared clock
+for synchronicity
+slower
+simple wiring
+
+I2C
+inter-integrated circuit
+synchronous
+shared clock 
+intermediate speed
+bi-directional
+but one-at-a-time
+simple wiring
+https://www.circuitbasics.com/basics-of-the-i2c-communication-protocol/#google_vignette
+
+
+
+SPI
+serial peripheral inteǆace
+synchronous
+shared clock
+high transfer speed
+simultaneous
+full duplex
+complex wiring
+
+
+
+Pull up resistor 
+Pull-up resistors are resistors which are used to ensure that a wire is pulled to a high logical level in the absence of an input signal.
+The pullup resistors pull the line high when it is not driven low by the open-drain interface. 
+
+The value of the pullup resistor is an important design consideration for I2C systems as an incorrect value can lead to signal loss.
+
+
+Storage classes in C: // Define the Scope, visibility & lifetime of a variable
+fole Xi
+Storage classes in C: // Define the Scope, visibility & lifetime of a variable
+auto:
+This is the default storage class for all the variables declared inside a function or a block. Hence, the keyword auto is rarely used while writing programs in C language.
+Auto variables can be only accessed within the block/function they have been declared and not outside them (which defines their scope).
+Of course, these can be accessed within nested blocks within the parent block/function in which the auto variable was declared.
+However, they can be accessed outside their scope as well using the concept of pointers given here by pointing to the very exact memory location where the variables reside. They are assigned a garbage value by default whenever they are declared.
+2. extern
+Extern storage class simply tells us that the variable is defined elsewhere and not within the same block where it is used. Basically, the value is assigned to it in a different block and this can be overwritten/changed in a different block as well. So an extern variable is nothing but a global variable initialized with a legal value where it is declared in order to be used elsewhere. It can be accessed within any function/block.
+Also, a normal global variable can be made extern as well by placing the 'extern' keyword before its declaration/definition in any function/block.
+This basically signifies that we are not initializing a new variable but instead, we are using/accessing the global variable only. The main purpose of using extern variables is that
+3. static
+This storage class is used to declare static variables which are popularly used while writing programs in C language. Static variables have the property of preserving their value even after they are out of their scope! Hence, static variables preserve the value of their last use in their scope.
+So we can say that they are initialized only once and exist till the termination of the program. Thus, no new memory is allocated because they are not re-declared.
+Their scope is local to the function to which they were defined. Global static variables can be accessed anywhere in the program. By default, they are assigned the value 0 by the compiler.
+This storage class declares register variables that have the same functionality as that of the auto variables. The only difference is that the compiler tries to store these variables in the register of the microprocessor if a free register is available. This makes the variables to be much faster than that of the variables stored in the memory during the runtime of the program.
+If a free registration is not available, these are then stored in the memory only. Usually, a few variables which are to be accessed very frequently
+in a program are declared with the register keyword which improves the running time of the program. An important and interesting point to be noted here is that we cannot obtain the address of a register variable using pointers.
+2
+3
+structures
+packed or unaligned
+- does not have any padding bytes attribute ( packed)
+Default
+- aligned or unpacked
+structures
+packed -or unaligned
+•- does not have any padding bytes _attribute (packed )
+- Default
+* aligned or unpacked
+
+int main ()
+char str [] = "Hello world" ;
+char *s1 = "Hello World";
+-str [0] = 'A';
+s1[0] = "A"; //Causes crash as data is in flash
+printf ("str = %s\n"
+printf ("str address = ip\n", str) ;
+printf ("s1 = s\n", s1) ;
+printi ("sl address = spin", s1) ;
+
+int main ()
+* char str [40];
+* printf ("Enter the name:"): fflush (stdout) :
+fgets (str, sizeof (str), stdin) ;
+printf ("name: %s", str); puts (str) ;
+
+Turn ON green led (PE8) - of STM32L476
+Bus - AHB2
+Port - E
+Pin - 8
+1. Enable the RCC clock register for port E AHB2 peripheral clock enable register (RCC AHBENR)
+Address offset: - 0x4C
+
+Turn ON green led (PE8) of STM32L476
+Bus - AHB2
+Port - E
+Pin - 8
+
+1. Enable the RCC clock register for port E AHB2 peripheral clock enable register (RCC_AHBZENR)
+Address offset : 0x4C
+Reset value: 0x0000 0000
+Base address of AHB2 - 0x4800 0000
+GPIOEEN - 0x4800004C
+
+2. Set the mode register to output
+GPIO mode register:
+Mode 00 - input mode
+Mode 01- general purpose output mode
+Mode 10--Alt function mode
+Mode 11 - ANalog mode (reset state)
+MODER8 - 0x4800 1000 + offset
+MODER value = Clear n 16th 17th bits first and then set mode 01
+OXFF EE FE EF
+1111 1101
+
+3. Set the value of Output data register
+Output Data register:
+ODR = 0x48001014
+Offset for pin 8=
+Little Endian
+Big Endian
+- means the order in which bytes are stored in memory
+
+Create display task
+Establish task communication between display task & App task, touch task
+Implement Factory test to read sensor data from hardware task
+UArt issue not receiving all character
+carrier board works at 40 MHz and eval works at 32 MHz
+Modbus
+Added factory test, emc test ...UI and backend read analog inputs, binary inputs or write values.
+microprocessor 8085
+8081
+muX
+de-mux
+data cache
+static time analysis
+Byte format for data transfer through SPI, UART, I2C byte swap
+current -> 0xCC8700FC => 0xFC0087CC
+uint32 a = 0xCC8700FC;
+uint32 b;
+b.= a;
+b = b << 24;
+void bit set (uint32_t number, uint32_t n) number number (inta ti<<n);
+void bit clear (uint32
+_t number, uint32_t n)
+number = number & ~ ( (uint32_t) 1 << n) ;
+
+void bit_clear (uint32_t number, uint32_t n)
+* number = number & ~ ( (uint32_ t)1 <<.n) :
+void bit_ toggle(uint32_t number, uint32 _t n)
+number = number ^ ((uint32_t)1 <<-n) ;
+void byteswap ( )
+•uint32 t a = 0xCC8700FC;
+uint32 t b = 0x00000000;• //expected = • 0xFC0087CC
+* b.= ( (a << 24) - & 0xFF000000) • 1 • ( (a >>•24) • & 0x000000EE) | ((a << 8) & - 0x00FF0000) - | - ( ( (a >> 8) & 0x0000FF00) ) ;
+MAX• of 3:
+#define MAX (x, Y, Z) • ( (x > Y) ?• ((x.> z) ? X : Z) : ( (y > z) -2 Y = Z) )
+Swap - 2- numbers without extra variable:
+.- uint32 t x =4;
+uint32
+t y = 6;
+•x•= x+ y: 1/ x => 4 +- 6.=>- 10
+y • = x• - y; +11 y => 10-- 6• => 4
+x•= x- y: 1/ x => 10 -4 => 6
+
+STM32 L4 are ultra low power
+ARM Cortex M4 - feature single FPU
+freq upto 80 MHz
+Has Memory protection Unit - enhances app security
+High Speed Flash - 1 Mbyte, 128 SRAM
+Quad SPI flash memory interface supported
+2 APB & 2 AHB bus
+They also feature standard and advanced communication interfaces, namely three ICs, three SPIs, three USARTs, two UARTs and one Low-Power UART, two SAI, one SDMMC, one CAN, • one USB OIG full-speed, o
+Memory protection unit
+The memory protection unit (MPU) is used to manage the CPU accesses to memory to prevent one task to accidentally corrupt the memory or resources used by any other active
+This memory area is organized into up to 8 protected areas that can in turn be divided up into 8 subareas. The protection area sizes are between 32 bytes and the whole
+4 Gigabytes of addressable memory.
+The MPU is especially helpful for applications where some critical or certified code has to be protected against the misbehavior of other tasks. It is usually managed by an RTOS (realSiXtime operating system) .
+If a program accesses a memory location that is prohibited by the
+MPU, the RTOS can detect it and take action. In an RTOS environment, the kernel can dynamically update the MPU area setting, based on the process to be executed.
+The MPU is optional and can be bypassed for applications that do not need it
+Embedded flash memory
+STM321476xx devices feature up to 1 Mbyte of embedded flash memory available for storing programs and data. The flash memory is divided into two banks allowing read-whileShwrite operations.
+This feature permits to perform a read operation from one bank while an erase or program operation is performed to the other bank. The dual bank boot is also supported. Each bank contains 256 pages of 2 Kbyte.
+Flexible protections can be configured thanks to option bytes:
+* Readout protection (RDP) to protect the whole memory. Three levels are available:
+- Level 0: no readout protection
+- Level 1: memory readout protection: the flash memory cannot be read from or written to if either debug features are connected, boot in RAM or bootloader is
+- Level 2: chip readout protection: debug features (Cortex-M4 JTAG and serial wire), boot in RAM and bootloader selection are disabled (JTAG fuse). This selection is irreversible
+Embedded • SRAM
+STM32L476xx devices feature up to 128 Kbyte of embedded SRAM, split into two blocks:
+* 96 Kbyte mapped at address 0x2000 0000 (SRAM1)
+* 32 Kbyte located at address 0x1000 0000 with hardware parity check (SRAM2) - This block is accessed through the ICode/Code buses for maximum performance.
+These 32 Kbyte SRAM can also be retained in Standby mode.
+The SRAM2 can be write-protected with 1 kbyte granularity.
+The memory can be accessed in read/write at CPU clock speed with O wait states
+Firewall
+The device embeds a Firewall which protects code sensitive and secure data from any access performed by a code executed outside of the protected areas.
+Each illegal access generates a reset which kills immediately the detected intrusion
+The Firewall main features are the following:
+* Three segments can be protected and defined thanks to the Firewall registers:
+- Code segment (located in flash or SRAMl if defined as executable protected area
+- Non-volatile data segment (located in flash)
+- Volatile data segment• (located in SRAM1)
+Boot modes
+At startup, BOOTO pin and BOOTl option bit are used to select one of three boot options:
+* Boot from user flash memory
+* Boot from system memory
+* Boot from embedded SRAM
+The boot loader is located in system memory. It is used to reprogram the flash memory by using USARI, I2C, SPI, CAN or USB OTG ES in Device mode through DEU (device-firmware upgrade) -
+Direct memory access controller. (DMA)
+Direct memory access (DA) -is used in order to provide high-speed data transfer between peripherals and memory as well as memory to memory. Data can be quickly moved by DMA without any CPU actions. This keeps CPU resources free for other operations.
+The • two DMA controllers have 14 channels in total, each dedicated to managing memory access requests from one or more peripherals. Each has an arbiter for handling the priority between DMA requests.
+Interrupts and events
+Nested vectored interrupt controller (NVIC)
+The devices embed a nested vectored interrupt controller able to manage 16 priority levels, and handle up to 81 maskable interrupt channels plus the 16 interrupt lines of the Cortex@-
+M4 .
+Extended interrupt/event controller (EXTI)
+The extended interrupt/event controller consists of 40 edge detector lines used to generate interrupt/event requests and wake-up the system from Stop mode. Each external line can be independently configured to select the trigger event (rising edge, falling edge, both) and can be masked independently. A pending register maintains the status of the interrupt requests.
+The internal lines are connected to peripherals with wakeup from Stop mode capability. The EXTI can detect an external line with a pulse width shorter than the internal clock period. Up to 114 GPIOs can be connected to the 16 external interrupt lines.
+Liquid crystal display controller (LCD)
+The LCD drives up to 8 common terminals and 44 segment terminals to drive up to 320 pixels
+
+MCU Internal Modules
+ - GPIO
+ - Timers
+ - Serial Ports
+ - ADC Converters
+ 
+Learn about how projects are created and binaries are build for products such as C550 or TEC4000
+Find End to End information about creating project, build, compile, flash & execution
+
+
+stdint.h contains the exacts data types such as int8_t, uint8_t, etc.
+ - portability & readability
+ 
+ 
+ Single precision floating point
+ Sign - 1 bit
+ exponent - 8 bit
+ mantisa/significant - 23 bits
+
+  float(32 bit)  Range = 	+/- 1.2 *10^-38 to +/- 3.4* 10^38   it has 6 decimal places
+  double(64 bit)  Range = 	+/- 2.3 *10^-308 to +/- 1.7* 10^308  has 15 decimal point 
+  long double (80 bit) 
+  
+  
+  
+  FREERTOS  session - 
+  https://www.linkedin.com/events/engineeringhour-configureanduse7248343726303895553/theater/
+  
+  
+standard input stream
+standard output stream
+standard error stream

@@ -1,0 +1,3 @@
+Its a build utility that generates standard build files e.g. makefiles on UNIX, etc.
+Cmake can compile source code ,create libraries and place them in location.
+It supports static & dynamic library builds

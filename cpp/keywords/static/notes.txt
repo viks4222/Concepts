@@ -1,3 +1,8 @@
+
+MPU allows the privileged software to define memory regions and assign memory access permission and memory attributes to each of them. 
+Depending on the implementation of the processor, the number of supported memory regions will vary.
+
+
 Static Keyword in C++
 Static is a keyword in C++ used to give special characteristics to an element. Static elements are allocated storage only once in a program lifetime in static storage area. And they have a scope till the program lifetime. Static Keyword can be used with following,
 
